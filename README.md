@@ -3,14 +3,18 @@
 Ben El Sotoor 📖 (بين السطور)
 
 ## Project Idea 💡
-Ben El Sotoor is an immersive e-commerce platform designed to help readers find their next great story. Developed as a graduation project for the Digital Egypt Pioneers Initiative (DEPI), this web application provides a seamless journey from browsing curated collections to a secure checkout. Built with .NET, it focuses on delivering a robust, scalable, and user-friendly experience that ensures the magic of reading starts even before the first page is turned.
+Ben El Sotoor is a full-stack e-commerce web application designed to provide readers with a seamless and immersive book-buying experience. Developed as a graduation project under the Digital Egypt Pioneers Initiative (DEPI), the platform enables users to browse curated book collections, search by categories, manage their shopping carts, and complete secure online purchases.
+
+The system is built using .NET technologies with a focus on scalability, performance, database integrity, and user-friendly design. It aims to bridge the gap between traditional reading culture and modern digital commerce by offering a reliable and efficient online bookstore platform.
 
 ## Team Members 👥
-- 👨‍💻 Ammar Mohamed Ali Ali
-- 👨‍💻 Mohamed Samy Khalil
-- 👨‍💻 Khaled Abdul Aleem Koriny
 - 👨‍💻 Mohamed Ahmed Mohamed Zaky
+- 👨‍💻 Ammar Mohamed Ali Ali
 - 👨‍💻 Zaid Mohamed
+- 👨‍💻 Khaled Abdul Aleem Koriny
+- 👨‍💻 Mohamed Samy Khalil
+
+
 
 ## Project Plan 🗂️
 ### Research & Analysis 🔍
