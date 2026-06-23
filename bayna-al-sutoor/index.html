@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--
+  index.html — Home page for "بين السطور" bookstore.
+  Shared chrome (navbar/footer/modal) is injected by js/ui.js into the
+  #site-header / #site-footer landmarks. All visible text is keyed via
+  data-i18n and resolved from /translations by js/language.js.
+-->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بين السطور | متجر الكتب العربية والعالمية</title>
+  <meta name="description" content="بين السطور متجر إلكتروني للكتب العربية والعالمية: آلاف العناوين، اشتراكات مرنة، واختبار يساعدك على اكتشاف كتابك المثالي.">
+  <meta name="keywords" content="كتب, مكتبة إلكترونية, روايات, تطوير الذات, شراء كتب, بين السطور">
+  <link rel="canonical" href="https://baynalsutoor.example/index.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="بين السطور | متجر الكتب">
+  <meta property="og:description" content="اكتشف عالمك بين السطور — آلاف الكتب في انتظارك.">
+  <meta property="og:image" content="assets/images/banners/og-cover.png">
+  <meta property="og:url" content="https://baynalsutoor.example/index.html">
+  <meta property="og:locale" content="ar_AR">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="بين السطور | متجر الكتب">
+  <meta name="twitter:description" content="اكتشف عالمك بين السطور — آلاف الكتب في انتظارك.">
+  <meta name="twitter:image" content="assets/images/banners/og-cover.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/pages/home.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Structured data (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "بين السطور",
+    "description": "متجر إلكتروني للكتب العربية والعالمية",
+    "url": "https://baynalsutoor.example/",
+    "image": "https://baynalsutoor.example/assets/images/banners/og-cover.png"
+  }
+  </script>
+
+  <!-- Scripts: services → i18n/theme → store → ui → bootstrap (all deferred, ordered) -->
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 data-i18n="hero.title">اكتشف عالمك بين السطور</h1>
+          <p data-i18n="hero.subtitle">آلاف الكتب في انتظارك — اقرأ، تعلّم، وانطلق في رحلة لا تنتهي.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="library.html" data-i18n="hero.cta">تصفّح المكتبة</a>
+            <a class="btn btn-outline btn-lg" href="quiz.html" data-i18n="hero.ctaSecondary">اكتشف كتابك المثالي</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-stack" id="hero-covers" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-i18n="sections.featured">كتب مختارة</h2>
+          <p data-i18n="sections.featuredSub">أبرز الإصدارات التي ينصح بها قراؤنا</p>
+        </div>
+        <div class="grid grid-books" id="featured-books"><div class="spinner"></div></div>
+        <div style="text-align:center;margin-top:2rem">
+          <a class="btn btn-ghost" href="library.html" data-i18n="common.viewAll">عرض الكل</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="section stats-band">
+      <div class="container">
+        <div class="grid" id="stats-band"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-i18n="sections.categories">تصفّح حسب التصنيف</h2>
+          <p data-i18n="sections.categoriesSub">اعثر على ما يناسب ذوقك</p>
+        </div>
+        <div class="grid grid-auto" id="home-categories"></div>
+      </div>
+    </section>
+
+    <!-- QUIZ CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <h2 data-i18n="sections.quizCta">لا تعرف ماذا تقرأ؟</h2>
+          <p data-i18n="sections.quizCtaSub">أجب عن أسئلة بسيطة ودعنا نقترح لك الكتاب المثالي</p>
+          <a class="btn btn-lg" href="quiz.html" data-i18n="nav.quiz">اكتشف كتابك</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBSCRIPTION CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-band accent">
+          <h2 data-i18n="sections.subsCta">اقرأ بلا حدود</h2>
+          <p data-i18n="sections.subsCtaSub">اشترك الآن واحصل على وصول كامل لمكتبتنا</p>
+          <a class="btn btn-lg" href="subscriptions.html" data-i18n="subscriptions.subscribe">اشترك الآن</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head"><h2 data-i18n="sections.testimonials">ماذا قال قراؤنا</h2></div>
+        <div class="grid grid-auto" id="testimonials"></div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section newsletter-band">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-i18n="sections.newsletter">اشترك في نشرتنا</h2>
+          <p data-i18n="sections.newsletterSub">أحدث الإصدارات والعروض مباشرة إلى بريدك</p>
+        </div>
+        <form class="newsletter-form" data-newsletter novalidate>
+          <label class="visually-hidden" for="nl-email" data-i18n="newsletter.placeholder">بريدك الإلكتروني</label>
+          <input class="input" id="nl-email" type="email" required data-i18n-attr="placeholder:newsletter.placeholder" placeholder="بريدك الإلكتروني">
+          <button class="btn btn-primary" type="submit" data-i18n="newsletter.button">اشترك</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>
