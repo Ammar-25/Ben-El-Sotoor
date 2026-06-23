@@ -1,0 +1,128 @@
+/* =====================================================================
+   cards.css — Book card, author card, category card, testimonial,
+   stat card, plan card. Reusable across pages; built by js/ui.js.
+   ===================================================================== */
+
+/* ---------- BOOK CARD ---------- */
+.book-card {
+  position: relative;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.book-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--brand); }
+
+.book-cover {
+  position: relative; aspect-ratio: 3 / 4; overflow: hidden;
+  background: var(--surface-2);
+}
+.book-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition); }
+.book-card:hover .book-cover img { transform: scale(1.06); }
+
+/* Badges over cover */
+.book-badges { position: absolute; top: 10px; inset-inline-start: 10px; display: flex; flex-direction: column; gap: .35rem; }
+
+/* Hover actions overlay */
+.book-actions {
+  position: absolute; inset-block-end: 0; inset-inline: 0;
+  display: flex; gap: .5rem; padding: .7rem;
+  background: linear-gradient(to top, rgba(0,0,0,.55), transparent);
+  opacity: 0; transform: translateY(8px); transition: opacity var(--transition), transform var(--transition);
+}
+.book-card:hover .book-actions, .book-card:focus-within .book-actions { opacity: 1; transform: none; }
+.book-actions .icon-btn { background: #fff; color: var(--text); box-shadow: var(--shadow-md); }
+.book-actions .icon-btn:hover { background: var(--brand); color: #fff; }
+
+/* Favorite button (top corner, always visible) */
+.fav-btn {
+  position: absolute; top: 10px; inset-inline-end: 10px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--glass); backdrop-filter: blur(6px);
+  display: grid; place-items: center; color: var(--text);
+  box-shadow: var(--shadow-sm); transition: transform var(--transition), color var(--transition);
+  z-index: 2;
+}
+.fav-btn:hover { transform: scale(1.12); }
+.fav-btn.active { color: var(--accent); }
+.fav-btn.active svg { fill: var(--accent); }
+
+.book-body { padding: 1rem; display: flex; flex-direction: column; gap: .45rem; flex: 1; }
+.book-title { font-size: 1.02rem; font-weight: 700; line-height: 1.35; }
+.book-author { font-size: .85rem; color: var(--text-muted); }
+.book-meta { display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-muted); }
+.book-desc { font-size: .85rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.book-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .4rem; }
+.book-price { display: flex; align-items: baseline; gap: .4rem; }
+.book-price .now { font-size: 1.15rem; font-weight: 800; color: var(--brand); }
+.book-price .was { font-size: .85rem; color: var(--text-muted); text-decoration: line-through; }
+.book-foot .btn { padding: .55rem 1rem; font-size: .82rem; }
+
+/* ---------- AUTHOR CARD ---------- */
+.author-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.8rem 1.2rem; text-align: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.author-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.author-card img {
+  width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+  margin: 0 auto 1rem; border: 3px solid var(--brand);
+}
+.author-card h3 { font-size: 1.1rem; font-weight: 800; }
+.author-card .author-bio { color: var(--text-muted); font-size: .88rem; margin: .5rem 0 1rem; }
+.author-stats { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 1.2rem; font-size: .85rem; }
+.author-stats b { display: block; font-size: 1.05rem; color: var(--brand); }
+.author-stats span { color: var(--text-muted); }
+
+/* ---------- CATEGORY CARD ---------- */
+.cat-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.8rem 1rem; text-align: center;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.cat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); background: var(--brand); color: #fff; }
+.cat-card .cat-icon { font-size: 2.4rem; }
+.cat-card h3 { font-size: 1.05rem; font-weight: 800; }
+.cat-card span { font-size: .82rem; color: var(--text-muted); }
+.cat-card:hover span { color: rgba(255,255,255,.85); }
+
+/* ---------- STAT CARD ---------- */
+.stat-card { text-align: center; padding: 1.5rem; }
+.stat-card .stat-num { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--brand); }
+.stat-card .stat-label { color: var(--text-muted); font-weight: 600; }
+
+/* ---------- TESTIMONIAL CARD ---------- */
+.testimonial {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1.6rem;
+}
+.testimonial p { font-style: italic; margin-bottom: 1rem; }
+.testimonial .who { display: flex; align-items: center; gap: .7rem; }
+.testimonial .who img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.testimonial .who b { font-size: .95rem; }
+.testimonial .who span { font-size: .8rem; color: var(--text-muted); }
+
+/* ---------- PLAN (subscription) CARD ---------- */
+.plan-card {
+  position: relative; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 2rem 1.6rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.plan-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.plan-card.featured { border: 2px solid var(--brand); box-shadow: var(--shadow-lg); }
+.plan-tag {
+  position: absolute; top: -13px; inset-inline-start: 50%; transform: translateX(-50%);
+  background: var(--brand); color: #fff; padding: .3rem 1rem; border-radius: var(--radius-pill);
+  font-size: .75rem; font-weight: 700;
+}
+[dir="rtl"] .plan-tag { transform: translateX(50%); }
+.plan-card h3 { font-size: 1.2rem; font-weight: 800; }
+.plan-price { font-size: 2.2rem; font-weight: 800; color: var(--brand); }
+.plan-price small { font-size: .9rem; color: var(--text-muted); font-weight: 600; }
+.plan-features { display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+.plan-features li { display: flex; align-items: center; gap: .5rem; font-size: .9rem; }
+.plan-features li::before { content: "✓"; color: var(--success); font-weight: 800; }

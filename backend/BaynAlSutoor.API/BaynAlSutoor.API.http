@@ -1,0 +1,6 @@
+@BaynAlSutoor.API_HostAddress = http://localhost:5033
+
+GET {{BaynAlSutoor.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

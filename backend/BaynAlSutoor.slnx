@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="BaynAlSutoor.API/BaynAlSutoor.API.csproj" />
+  <Project Path="BaynAlSutoor.Application/BaynAlSutoor.Application.csproj" />
+  <Project Path="BaynAlSutoor.Domain/BaynAlSutoor.Domain.csproj" />
+  <Project Path="BaynAlSutoor.Infrastructure/BaynAlSutoor.Infrastructure.csproj" />
+  <Project Path="BaynAlSutoor.Persistence/BaynAlSutoor.Persistence.csproj" />
+  <Project Path="BaynAlSutoor.Tests/BaynAlSutoor.Tests.csproj" />
+</Solution>

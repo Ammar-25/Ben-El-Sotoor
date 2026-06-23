@@ -1,0 +1,257 @@
+{
+  "_comment": "Book data provider. Each object is one book. To ADD a book: copy an object, give it a unique numeric id, fill bilingual fields (ar/en), set authorId to an existing author in authors.json, and place its cover in assets/images/books/. Prices are numeric (currency handled in UI). 'category' must match a key in the categories list used across the UI.",
+  "books": [
+    {
+      "id": 1,
+      "title": { "ar": "أسرار الكون", "en": "Secrets of the Universe" },
+      "authorId": 1,
+      "category": "science",
+      "cover": "assets/images/books/book-1.png",
+      "rating": 4.7,
+      "reviewsCount": 128,
+      "description": {
+        "ar": "رحلة مبسّطة في أعماق الفيزياء الحديثة والكون الفسيح بأسلوب يفهمه الجميع.",
+        "en": "A simplified journey into modern physics and the vast cosmos in language anyone can follow."
+      },
+      "price": 120,
+      "oldPrice": 160,
+      "isNew": true,
+      "publisher": { "ar": "دار المعرفة", "en": "Dar Al-Maarefa" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 320,
+      "year": 2024,
+      "createdAt": "2024-11-02"
+    },
+    {
+      "id": 2,
+      "title": { "ar": "ظلال المدينة", "en": "City Shadows" },
+      "authorId": 2,
+      "category": "novels",
+      "cover": "assets/images/books/book-2.png",
+      "rating": 4.4,
+      "reviewsCount": 96,
+      "description": {
+        "ar": "رواية تشويقية تدور أحداثها في أزقة مدينة قديمة تخفي أسرارها خلف كل باب.",
+        "en": "A thriller set in the alleys of an old city that hides a secret behind every door."
+      },
+      "price": 90,
+      "oldPrice": 110,
+      "isNew": false,
+      "publisher": { "ar": "دار الأدب", "en": "Dar Al-Adab" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 280,
+      "year": 2023,
+      "createdAt": "2023-06-15"
+    },
+    {
+      "id": 3,
+      "title": { "ar": "عقل بلا حدود", "en": "Mind Without Limits" },
+      "authorId": 3,
+      "category": "self-development",
+      "cover": "assets/images/books/book-3.png",
+      "rating": 4.8,
+      "reviewsCount": 204,
+      "description": {
+        "ar": "دليل عملي لبناء عادات قوية وتطوير الذات خطوة بخطوة نحو حياة أكثر إنتاجية.",
+        "en": "A practical guide to building strong habits and developing yourself step by step."
+      },
+      "price": 75,
+      "oldPrice": 95,
+      "isNew": true,
+      "publisher": { "ar": "دار النهضة", "en": "Dar Al-Nahda" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 240,
+      "year": 2024,
+      "createdAt": "2024-12-01"
+    },
+    {
+      "id": 4,
+      "title": { "ar": "تاريخ لا يُروى", "en": "An Untold History" },
+      "authorId": 4,
+      "category": "history",
+      "cover": "assets/images/books/book-4.png",
+      "rating": 4.5,
+      "reviewsCount": 142,
+      "description": {
+        "ar": "إعادة قراءة لأحداث تاريخية فارقة من زوايا جديدة بعيدًا عن الرواية الرسمية.",
+        "en": "A fresh reading of pivotal historical events away from the official narrative."
+      },
+      "price": 110,
+      "oldPrice": 0,
+      "isNew": false,
+      "publisher": { "ar": "دار التاريخ", "en": "Dar Al-Tarikh" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 410,
+      "year": 2022,
+      "createdAt": "2022-09-20"
+    },
+    {
+      "id": 5,
+      "title": { "ar": "حديقة الشعر", "en": "Garden of Poetry" },
+      "authorId": 5,
+      "category": "poetry",
+      "cover": "assets/images/books/book-5.png",
+      "rating": 4.6,
+      "reviewsCount": 73,
+      "description": {
+        "ar": "مجموعة شعرية تنبض بالحنين والجمال وتأخذك في رحلة وجدانية هادئة.",
+        "en": "A poetry collection pulsing with nostalgia and beauty for a calm emotional journey."
+      },
+      "price": 60,
+      "oldPrice": 80,
+      "isNew": false,
+      "publisher": { "ar": "دار الشعر", "en": "Dar Al-Shiir" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 150,
+      "year": 2023,
+      "createdAt": "2023-03-11"
+    },
+    {
+      "id": 6,
+      "title": { "ar": "اقتصاد الغد", "en": "The Economy of Tomorrow" },
+      "authorId": 3,
+      "category": "business",
+      "cover": "assets/images/books/book-6.png",
+      "rating": 4.3,
+      "reviewsCount": 88,
+      "description": {
+        "ar": "تحليل لمستقبل الاقتصاد الرقمي وكيف تستعد الشركات والأفراد للموجة القادمة.",
+        "en": "An analysis of the digital economy's future and how to prepare for the next wave."
+      },
+      "price": 130,
+      "oldPrice": 150,
+      "isNew": true,
+      "publisher": { "ar": "دار الأعمال", "en": "Dar Al-Aamal" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 300,
+      "year": 2024,
+      "createdAt": "2024-10-05"
+    },
+    {
+      "id": 7,
+      "title": { "ar": "مغامرات الصغار", "en": "Little Adventures" },
+      "authorId": 2,
+      "category": "children",
+      "cover": "assets/images/books/book-7.png",
+      "rating": 4.9,
+      "reviewsCount": 311,
+      "description": {
+        "ar": "قصص مصوّرة ممتعة تغرس القيم الجميلة في نفوس الأطفال بأسلوب محبب.",
+        "en": "Fun illustrated stories that plant beautiful values in children's hearts."
+      },
+      "price": 50,
+      "oldPrice": 65,
+      "isNew": false,
+      "publisher": { "ar": "دار الطفل", "en": "Dar Al-Tifl" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 120,
+      "year": 2023,
+      "createdAt": "2023-08-19"
+    },
+    {
+      "id": 8,
+      "title": { "ar": "الذكاء الاصطناعي للجميع", "en": "AI for Everyone" },
+      "authorId": 1,
+      "category": "science",
+      "cover": "assets/images/books/book-8.png",
+      "rating": 4.7,
+      "reviewsCount": 176,
+      "description": {
+        "ar": "مدخل واضح إلى عالم الذكاء الاصطناعي وتطبيقاته في حياتنا اليومية.",
+        "en": "A clear introduction to artificial intelligence and its everyday applications."
+      },
+      "price": 140,
+      "oldPrice": 170,
+      "isNew": true,
+      "publisher": { "ar": "دار التقنية", "en": "Dar Al-Teqnia" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 360,
+      "year": 2025,
+      "createdAt": "2025-01-10"
+    },
+    {
+      "id": 9,
+      "title": { "ar": "طريق الحرير", "en": "The Silk Road" },
+      "authorId": 4,
+      "category": "history",
+      "cover": "assets/images/books/book-9.png",
+      "rating": 4.4,
+      "reviewsCount": 64,
+      "description": {
+        "ar": "حكاية أعظم طرق التجارة في التاريخ وما حملته من حضارات وثقافات.",
+        "en": "The story of history's greatest trade route and the civilizations it carried."
+      },
+      "price": 100,
+      "oldPrice": 0,
+      "isNew": false,
+      "publisher": { "ar": "دار التاريخ", "en": "Dar Al-Tarikh" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 290,
+      "year": 2022,
+      "createdAt": "2022-05-30"
+    },
+    {
+      "id": 10,
+      "title": { "ar": "فن الهدوء", "en": "The Art of Calm" },
+      "authorId": 5,
+      "category": "self-development",
+      "cover": "assets/images/books/book-10.png",
+      "rating": 4.6,
+      "reviewsCount": 119,
+      "description": {
+        "ar": "كيف تجد السكينة وسط ضجيج الحياة وتعيد التوازن إلى يومك.",
+        "en": "How to find serenity amid life's noise and restore balance to your day."
+      },
+      "price": 70,
+      "oldPrice": 90,
+      "isNew": false,
+      "publisher": { "ar": "دار النهضة", "en": "Dar Al-Nahda" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 200,
+      "year": 2024,
+      "createdAt": "2024-07-22"
+    },
+    {
+      "id": 11,
+      "title": { "ar": "رحلة رائد فضاء", "en": "An Astronaut's Journey" },
+      "authorId": 1,
+      "category": "novels",
+      "cover": "assets/images/books/book-11.png",
+      "rating": 4.5,
+      "reviewsCount": 102,
+      "description": {
+        "ar": "رواية خيال علمي مشوّقة عن أول رحلة بشرية إلى ما وراء المجموعة الشمسية.",
+        "en": "A gripping sci-fi novel about the first human voyage beyond the solar system."
+      },
+      "price": 95,
+      "oldPrice": 120,
+      "isNew": true,
+      "publisher": { "ar": "دار الأدب", "en": "Dar Al-Adab" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 340,
+      "year": 2025,
+      "createdAt": "2025-02-14"
+    },
+    {
+      "id": 12,
+      "title": { "ar": "قيادة الفرق", "en": "Leading Teams" },
+      "authorId": 3,
+      "category": "business",
+      "cover": "assets/images/books/book-12.png",
+      "rating": 4.2,
+      "reviewsCount": 57,
+      "description": {
+        "ar": "مبادئ عملية في القيادة وبناء فرق عمل ناجحة وملهمة.",
+        "en": "Practical principles for leadership and building successful, inspired teams."
+      },
+      "price": 115,
+      "oldPrice": 135,
+      "isNew": false,
+      "publisher": { "ar": "دار الأعمال", "en": "Dar Al-Aamal" },
+      "bookLanguage": { "ar": "العربية", "en": "Arabic" },
+      "pages": 260,
+      "year": 2023,
+      "createdAt": "2023-11-08"
+    }
+  ]
+}
