@@ -9,8 +9,11 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings.GetValue<string>("Secret") ?? "DefaultSuperSecretKey1234567890!";
+var jwtSettings = new BaynAlSutoor.Infrastructure.Services.JwtSettings();
+builder.Configuration.GetSection(BaynAlSutoor.Infrastructure.Services.JwtSettings.SectionName).Bind(jwtSettings);
+
+builder.Services.Configure<BaynAlSutoor.Infrastructure.Services.JwtSettings>(
+    builder.Configuration.GetSection(BaynAlSutoor.Infrastructure.Services.JwtSettings.SectionName));
 
 builder.Services.AddAuthentication(options =>
 {
@@ -25,9 +28,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.GetValue<string>("Issuer"),
-        ValidAudience = jwtSettings.GetValue<string>("Audience"),
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
         RoleClaimType = System.Security.Claims.ClaimTypes.Role
     };
 });

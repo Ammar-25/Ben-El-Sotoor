@@ -1,0 +1,36 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# Test Results
+TestResults/
+
+# Coverage
+coverage/
+*.coverage
+
+# Packages
+packages/
+*.nupkg
+
+# Publish
+publish/
+
+# Environment
+.env
+.env.*
+
+# OS Files
+Thumbs.db
+.DS_Store

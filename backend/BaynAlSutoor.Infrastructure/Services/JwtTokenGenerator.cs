@@ -1,6 +1,6 @@
 using BaynAlSutoor.Application.Interfaces;
 using BaynAlSutoor.Domain.Entities;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,21 +13,16 @@ namespace BaynAlSutoor.Infrastructure.Services
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private readonly IConfiguration _configuration;
+        private readonly JwtSettings _jwtSettings;
 
-        public JwtTokenGenerator(IConfiguration configuration)
+        public JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
         {
-            _configuration = configuration;
+            _jwtSettings = jwtSettings.Value;
         }
 
         public string GenerateToken(User user, IEnumerable<string> roles, IEnumerable<string> permissions)
         {
-            var secretKey = _configuration["JwtSettings:Secret"] ?? "BaynAlSutoorSuperSecretSecurityKeyThatNeedsToBeLongEnough";
-            var issuer = _configuration["JwtSettings:Issuer"] ?? "BaynAlSutoorAPI";
-            var audience = _configuration["JwtSettings:Audience"] ?? "BaynAlSutoorClient";
-            var expiryMinutes = double.Parse(_configuration["JwtSettings:ExpiryMinutes"] ?? "60");
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
@@ -51,10 +46,10 @@ namespace BaynAlSutoor.Infrastructure.Services
             }
 
             var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
