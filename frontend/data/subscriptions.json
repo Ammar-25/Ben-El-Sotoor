@@ -1,0 +1,41 @@
+{
+  "_comment": "Subscription plans provider. To UPDATE a plan: edit price/period/features here. 'featured' highlights one plan in the UI. 'featureKeys' map to translation keys in ar.json/en.json under 'plansFeatures' so feature labels stay translatable.",
+  "plans": [
+    {
+      "id": "single",
+      "name": { "ar": "كتاب واحد", "en": "Single Book" },
+      "price": 0,
+      "priceLabel": { "ar": "حسب الكتاب", "en": "Per book" },
+      "period": { "ar": "مرة واحدة", "en": "one-time" },
+      "featured": false,
+      "featureKeys": ["payPerBook", "lifetimeAccess", "noCommitment"]
+    },
+    {
+      "id": "monthly",
+      "name": { "ar": "الاشتراك الشهري", "en": "Monthly" },
+      "price": 99,
+      "priceLabel": { "ar": "٩٩ ج.م", "en": "99 EGP" },
+      "period": { "ar": "شهريًا", "en": "per month" },
+      "featured": false,
+      "featureKeys": ["unlimitedReading", "newReleases", "cancelAnytime", "oneDevice"]
+    },
+    {
+      "id": "annual",
+      "name": { "ar": "الاشتراك السنوي", "en": "Annual" },
+      "price": 899,
+      "priceLabel": { "ar": "٨٩٩ ج.م", "en": "899 EGP" },
+      "period": { "ar": "سنويًا", "en": "per year" },
+      "featured": true,
+      "featureKeys": ["unlimitedReading", "newReleases", "twoMonthsFree", "threeDevices", "offlineReading"]
+    },
+    {
+      "id": "premium",
+      "name": { "ar": "البريميوم", "en": "Premium" },
+      "price": 1499,
+      "priceLabel": { "ar": "١٤٩٩ ج.م", "en": "1499 EGP" },
+      "period": { "ar": "سنويًا", "en": "per year" },
+      "featured": false,
+      "featureKeys": ["everythingAnnual", "audioBooks", "exclusiveContent", "fiveDevices", "prioritySupport"]
+    }
+  ]
+}
