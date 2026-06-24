@@ -1,0 +1,71 @@
+{
+  "_comment": "Review data provider. To ADD a review: copy an object, set a unique id, link to an existing bookId, set rating 1-5 and a date (YYYY-MM-DD). The reviews page aggregates these into an overall rating and a breakdown.",
+  "reviews": [
+    {
+      "id": 1,
+      "bookId": 1,
+      "userName": { "ar": "محمد علي", "en": "Mohamed Ali" },
+      "rating": 5,
+      "text": {
+        "ar": "كتاب رائع بسّط لي مفاهيم كنت أظنها مستحيلة الفهم. أنصح به بشدة.",
+        "en": "A brilliant book that simplified concepts I thought impossible to grasp. Highly recommended."
+      },
+      "date": "2025-01-12"
+    },
+    {
+      "id": 2,
+      "bookId": 1,
+      "userName": { "ar": "فاطمة حسن", "en": "Fatma Hassan" },
+      "rating": 4,
+      "text": {
+        "ar": "معلومات قيّمة وأسلوب ممتع، لكن بعض الفصول طويلة قليلاً.",
+        "en": "Valuable information and an enjoyable style, though some chapters run a bit long."
+      },
+      "date": "2024-12-28"
+    },
+    {
+      "id": 3,
+      "bookId": 3,
+      "userName": { "ar": "خالد إبراهيم", "en": "Khaled Ibrahim" },
+      "rating": 5,
+      "text": {
+        "ar": "غيّر هذا الكتاب طريقة تنظيمي ليومي بالكامل. شكراً للكاتبة.",
+        "en": "This book completely changed how I organize my day. Thank you to the author."
+      },
+      "date": "2025-02-03"
+    },
+    {
+      "id": 4,
+      "bookId": 7,
+      "userName": { "ar": "أم يوسف", "en": "Umm Youssef" },
+      "rating": 5,
+      "text": {
+        "ar": "أطفالي أحبوا القصص كثيراً ونطلبها كل ليلة قبل النوم.",
+        "en": "My kids loved the stories and ask for them every night before bed."
+      },
+      "date": "2025-01-20"
+    },
+    {
+      "id": 5,
+      "bookId": 2,
+      "userName": { "ar": "سلمى ناصر", "en": "Salma Nasser" },
+      "rating": 4,
+      "text": {
+        "ar": "حبكة مشوّقة وأحداث متلاحقة، استمتعت بكل صفحة.",
+        "en": "A gripping plot with fast-paced events. I enjoyed every page."
+      },
+      "date": "2024-11-30"
+    },
+    {
+      "id": 6,
+      "bookId": 8,
+      "userName": { "ar": "عمر طارق", "en": "Omar Tarek" },
+      "rating": 5,
+      "text": {
+        "ar": "أفضل مقدمة قرأتها عن الذكاء الاصطناعي بالعربية.",
+        "en": "The best introduction to AI I've read in Arabic."
+      },
+      "date": "2025-02-18"
+    }
+  ]
+}

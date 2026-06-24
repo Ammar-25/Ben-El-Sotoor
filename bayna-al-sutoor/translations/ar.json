@@ -1,0 +1,262 @@
+{
+  "_comment": "Arabic (RTL) UI strings. To EDIT visible text: change the value here. Keys MUST match en.json. Reference in HTML via data-i18n=\"group.key\" (text), data-i18n-attr=\"placeholder:group.key\" (attributes). Categories and plan features live here too so they stay translatable.",
+  "dir": "rtl",
+  "langName": "العربية",
+  "nav": {
+    "home": "الرئيسية",
+    "library": "المكتبة",
+    "latest": "أحدث الإصدارات",
+    "categories": "التصنيفات",
+    "authors": "المؤلفون",
+    "quiz": "اكتشف كتابك",
+    "subscriptions": "الاشتراكات",
+    "search": "بحث",
+    "cart": "السلة",
+    "profile": "حسابي",
+    "login": "تسجيل الدخول",
+    "reviews": "التقييمات"
+  },
+  "common": {
+    "brand": "بين السطور",
+    "tagline": "حيث تبدأ كل حكاية",
+    "addToCart": "أضف للسلة",
+    "quickView": "نظرة سريعة",
+    "viewAll": "عرض الكل",
+    "viewProfile": "عرض الملف",
+    "readSample": "اقرأ عينة",
+    "readMore": "اقرأ المزيد",
+    "currency": "ج.م",
+    "by": "بقلم",
+    "reviews": "تقييم",
+    "books": "كتاب",
+    "followers": "متابع",
+    "new": "جديد",
+    "off": "خصم",
+    "loading": "جارٍ التحميل...",
+    "search": "ابحث عن كتاب أو مؤلف...",
+    "filterBy": "تصفية حسب",
+    "sortBy": "ترتيب حسب",
+    "all": "الكل",
+    "results": "نتيجة",
+    "noResults": "لا توجد نتائج",
+    "page": "صفحة",
+    "prev": "السابق",
+    "next": "التالي",
+    "close": "إغلاق",
+    "lightMode": "الوضع الفاتح",
+    "darkMode": "الوضع الداكن",
+    "skipToContent": "تخطٍّ إلى المحتوى",
+    "favorite": "المفضلة",
+    "added": "تمت الإضافة"
+  },
+  "sort": {
+    "newest": "الأحدث",
+    "priceLow": "السعر: من الأقل",
+    "priceHigh": "السعر: من الأعلى",
+    "rating": "الأعلى تقييمًا"
+  },
+  "categories": {
+    "science": "علوم",
+    "novels": "روايات",
+    "self-development": "تطوير الذات",
+    "history": "تاريخ",
+    "poetry": "شعر",
+    "business": "أعمال",
+    "children": "أطفال"
+  },
+  "hero": {
+    "title": "اكتشف عالمك بين السطور",
+    "subtitle": "آلاف الكتب في انتظارك — اقرأ، تعلّم، وانطلق في رحلة لا تنتهي.",
+    "cta": "تصفّح المكتبة",
+    "ctaSecondary": "اكتشف كتابك المثالي"
+  },
+  "sections": {
+    "featured": "كتب مختارة",
+    "featuredSub": "أبرز الإصدارات التي ينصح بها قراؤنا",
+    "stats": "أرقام تتحدث عنا",
+    "categories": "تصفّح حسب التصنيف",
+    "categoriesSub": "اعثر على ما يناسب ذوقك",
+    "quizCta": "لا تعرف ماذا تقرأ؟",
+    "quizCtaSub": "أجب عن أسئلة بسيطة ودعنا نقترح لك الكتاب المثالي",
+    "subsCta": "اقرأ بلا حدود",
+    "subsCtaSub": "اشترك الآن واحصل على وصول كامل لمكتبتنا",
+    "testimonials": "ماذا قال قراؤنا",
+    "newsletter": "اشترك في نشرتنا",
+    "newsletterSub": "أحدث الإصدارات والعروض مباشرة إلى بريدك",
+    "latest": "أحدث الإصدارات",
+    "latestSub": "كل ما هو جديد في عالم الكتب",
+    "authors": "مؤلفونا",
+    "authorsSub": "تعرّف على العقول خلف الكلمات"
+  },
+  "stats": {
+    "books": "كتاب",
+    "authors": "مؤلف",
+    "readers": "قارئ",
+    "reviews": "تقييم"
+  },
+  "newsletter": {
+    "placeholder": "بريدك الإلكتروني",
+    "button": "اشترك",
+    "success": "تم اشتراكك بنجاح!"
+  },
+  "filters": {
+    "weekly": "هذا الأسبوع",
+    "monthly": "هذا الشهر",
+    "yearly": "هذا العام",
+    "category": "التصنيف",
+    "language": "اللغة",
+    "price": "السعر",
+    "priceRange": "نطاق السعر"
+  },
+  "modal": {
+    "publisher": "الناشر",
+    "language": "اللغة",
+    "pages": "الصفحات",
+    "year": "سنة النشر",
+    "rating": "التقييم",
+    "category": "التصنيف",
+    "reviewsPreview": "آراء القراء"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلتك فارغة",
+    "emptyCta": "ابدأ التسوق",
+    "item": "المنتج",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة (14%)",
+    "total": "الإجمالي",
+    "checkout": "إتمام الشراء",
+    "remove": "إزالة",
+    "summary": "ملخص الطلب",
+    "orderPlaced": "تم تنفيذ طلبك بنجاح!"
+  },
+  "quiz": {
+    "title": "اكتشف كتابك المثالي",
+    "subtitle": "أجب عن الأسئلة التالية",
+    "start": "ابدأ الاختبار",
+    "next": "التالي",
+    "prev": "السابق",
+    "result": "نتيجتك",
+    "restart": "أعد الاختبار",
+    "recommended": "كتب نرشّحها لك",
+    "questions": [
+      {
+        "q": "ما الذي تبحث عنه في القراءة؟",
+        "a": ["المعرفة والعلم", "التشويق والمتعة", "تطوير الذات", "الجمال واللغة"]
+      },
+      {
+        "q": "كم من الوقت تخصص للقراءة؟",
+        "a": ["وقت قصير يوميًا", "ساعات في عطلة الأسبوع", "كلما سنحت الفرصة", "أقرأ باستمرار"]
+      },
+      {
+        "q": "أي أجواء تفضّل؟",
+        "a": ["المستقبل والتقنية", "الماضي والتاريخ", "الحاضر والواقع", "الخيال والشعر"]
+      },
+      {
+        "q": "ما الشعور الذي تريده بعد القراءة؟",
+        "a": ["أن أتعلّم شيئًا جديدًا", "أن أعيش مغامرة", "أن أتغيّر للأفضل", "أن أشعر بالسكينة"]
+      }
+    ],
+    "personalities": {
+      "science": "العقل الفضولي",
+      "novels": "روح المغامرة",
+      "self-development": "الباحث عن التطور",
+      "poetry": "القلب الشاعر"
+    }
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "name": "الاسم الكامل",
+    "loginBtn": "دخول",
+    "registerBtn": "تسجيل",
+    "google": "المتابعة عبر جوجل",
+    "facebook": "المتابعة عبر فيسبوك",
+    "forgot": "نسيت كلمة المرور؟",
+    "or": "أو",
+    "remember": "تذكّرني"
+  },
+  "profile": {
+    "title": "حسابي",
+    "memberSince": "عضو منذ",
+    "stats": "إحصائياتي",
+    "readingProgress": "تقدّم القراءة",
+    "favorites": "المفضلة",
+    "myReviews": "تقييماتي",
+    "purchased": "كتبي المشتراة",
+    "booksRead": "كتب مقروءة",
+    "inProgress": "قيد القراءة",
+    "noFavorites": "لم تضف أي كتاب للمفضلة بعد"
+  },
+  "reviews": {
+    "title": "التقييمات والمراجعات",
+    "overall": "التقييم العام",
+    "breakdown": "توزيع التقييمات",
+    "userReviews": "آراء القراء",
+    "writeReview": "اكتب مراجعة",
+    "yourRating": "تقييمك",
+    "yourReview": "رأيك",
+    "submit": "إرسال المراجعة",
+    "thanks": "شكرًا على مراجعتك!"
+  },
+  "subscriptions": {
+    "title": "اختر خطتك",
+    "subtitle": "خطط مرنة تناسب كل قارئ",
+    "subscribe": "اشترك الآن",
+    "comparison": "مقارنة الخطط",
+    "feature": "الميزة",
+    "faq": "الأسئلة الشائعة",
+    "mostPopular": "الأكثر شيوعًا"
+  },
+  "plansFeatures": {
+    "payPerBook": "ادفع لكل كتاب على حدة",
+    "lifetimeAccess": "وصول دائم للكتاب",
+    "noCommitment": "بدون التزام شهري",
+    "unlimitedReading": "قراءة غير محدودة",
+    "newReleases": "أحدث الإصدارات",
+    "cancelAnytime": "إلغاء في أي وقت",
+    "oneDevice": "جهاز واحد",
+    "twoMonthsFree": "شهران مجانًا",
+    "threeDevices": "حتى 3 أجهزة",
+    "offlineReading": "قراءة دون اتصال",
+    "everythingAnnual": "كل مزايا الخطة السنوية",
+    "audioBooks": "الكتب الصوتية",
+    "exclusiveContent": "محتوى حصري",
+    "fiveDevices": "حتى 5 أجهزة",
+    "prioritySupport": "دعم ذو أولوية"
+  },
+  "faq": {
+    "q1": "هل يمكنني إلغاء اشتراكي في أي وقت؟",
+    "a1": "نعم، يمكنك الإلغاء في أي وقت دون أي رسوم إضافية.",
+    "q2": "هل تتوفر الكتب الصوتية؟",
+    "a2": "الكتب الصوتية متاحة ضمن خطة البريميوم فقط.",
+    "q3": "هل أستطيع القراءة دون اتصال بالإنترنت؟",
+    "a3": "نعم، القراءة دون اتصال متاحة في الخطة السنوية والبريميوم.",
+    "q4": "كم عدد الأجهزة المسموح بها؟",
+    "a4": "يعتمد على خطتك، من جهاز واحد حتى خمسة أجهزة."
+  },
+  "footer": {
+    "about": "عن المتجر",
+    "aboutText": "بين السطور وجهتك الأولى للكتب العربية والعالمية. نؤمن بأن لكل قارئ كتابًا ينتظره.",
+    "quickLinks": "روابط سريعة",
+    "support": "الدعم",
+    "contact": "تواصل معنا",
+    "faq": "الأسئلة الشائعة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام",
+    "followUs": "تابعنا",
+    "rights": "جميع الحقوق محفوظة © 2026 بين السطور"
+  },
+  "errors": {
+    "notFoundTitle": "الصفحة غير موجودة",
+    "notFoundCode": "٤٠٤",
+    "notFoundText": "يبدو أن الصفحة التي تبحث عنها قد ضاعت بين السطور.",
+    "backHome": "العودة للرئيسية",
+    "searchShortcut": "ابحث عن كتاب"
+  }
+}
