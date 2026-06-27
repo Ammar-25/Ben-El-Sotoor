@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.IO;
 
 namespace BaynAlSutoor.Persistence
 {
@@ -614,7 +616,73 @@ namespace BaynAlSutoor.Persistence
                 await _context.SaveChangesAsync();
             }
 
+            // 11. Load and Seed Generated Data
+            var seedFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "BaynAlSutoor.Persistence", "seed_data.json");
+            if (!File.Exists(seedFilePath))
+            {
+                // Fallback for different execution contexts
+                seedFilePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "BaynAlSutoor.Persistence", "seed_data.json");
+            }
+            
+            if (File.Exists(seedFilePath))
+            {
+                var jsonData = await File.ReadAllTextAsync(seedFilePath);
+                var options = new JsonSerializerOptions 
+                { 
+                    PropertyNameCaseInsensitive = true,
+                    NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString 
+                };
+                var seedData = JsonSerializer.Deserialize<SeedDataDto>(jsonData, options);
+
+                if (seedData != null)
+                {
+                    if (seedData.Authors != null && seedData.Authors.Any() && !await _context.Authors.AnyAsync(a => a.Id > 5))
+                    {
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Authors ON");
+                        await _context.Authors.AddRangeAsync(seedData.Authors);
+                        await _context.SaveChangesAsync();
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Authors OFF");
+                    }
+
+                    if (seedData.Books != null && seedData.Books.Any() && !await _context.Books.AnyAsync(b => b.Id > 12))
+                    {
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Books ON");
+                        await _context.Books.AddRangeAsync(seedData.Books);
+                        await _context.SaveChangesAsync();
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Books OFF");
+                    }
+
+                    if (seedData.Users != null && seedData.Users.Any() && !await _context.Users.AnyAsync(u => u.Id > 1))
+                    {
+                        foreach (var user in seedData.Users)
+                        {
+                            user.PasswordHash = _passwordHasher.HashPassword(user.PasswordHash);
+                        }
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Users ON");
+                        await _context.Users.AddRangeAsync(seedData.Users);
+                        await _context.SaveChangesAsync();
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Users OFF");
+                    }
+
+                    if (seedData.Reviews != null && seedData.Reviews.Any() && !await _context.Reviews.AnyAsync(r => r.Id > 10))
+                    {
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Reviews ON");
+                        await _context.Reviews.AddRangeAsync(seedData.Reviews);
+                        await _context.SaveChangesAsync();
+                        await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Reviews OFF");
+                    }
+                }
+            }
+
             await transaction.CommitAsync();
         }
+    }
+
+    public class SeedDataDto
+    {
+        public List<Author> Authors { get; set; }
+        public List<Book> Books { get; set; }
+        public List<User> Users { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }
