@@ -3,27 +3,43 @@
    ===================================================================== */
 
 const AuthorService = (() => {
-  const SOURCE = 'data/authors.json';
+  const API_BASE = 'http://localhost:5033/api/authors';
+
+  // Helper for GET requests
+  async function fetchApi(endpoint) {
+    try {
+      const response = await fetch(`${API_BASE}${endpoint}`);
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      return await response.json();
+    } catch (e) {
+      console.error('[AuthorService]', e);
+      return null;
+    }
+  }
 
   async function all() {
-    const data = await DataClient.fetchJson(SOURCE);
-    return data.authors;
+    const res = await fetchApi('');
+    return res || [];
   }
 
   async function getById(id) {
-    const authors = await all();
-    return authors.find((a) => a.id === Number(id)) || null;
+    return await fetchApi(`/${id}`);
   }
 
   /** Resolve an author's display name for a given language, safe if missing. */
   async function nameOf(id, lang = 'ar') {
     const author = await getById(id);
-    return author ? author.name[lang] : '';
+    if (!author) return '';
+    // Handle both { ar: '...', en: '...' } and flat string names
+    if (author.name && typeof author.name === 'object') {
+      return author.name[lang] || author.name.en || author.name.ar || '';
+    }
+    return author.name || author.Name || '';
   }
 
   async function featured(limit = 4) {
-    const authors = await all();
-    return [...authors].sort((a, b) => b.followers - a.followers).slice(0, limit);
+    const res = await fetchApi(`/featured?limit=${limit}`);
+    return res || [];
   }
 
   return { all, getById, nameOf, featured };

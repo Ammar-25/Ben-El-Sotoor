@@ -373,6 +373,7 @@ const UI = (() => {
       const qv = e.target.closest('[data-quickview]');
       const add = e.target.closest('[data-add]');
       const fav = e.target.closest('[data-fav]');
+      const langBtn = e.target.closest('[data-lang-btn]');
       if (qv) { e.preventDefault(); openBook(qv.dataset.quickview); }
       if (add && window.Cart) { e.preventDefault(); Cart.add(add.dataset.add); }
       if (fav && window.Cart) {
@@ -380,6 +381,10 @@ const UI = (() => {
         const on = Cart.toggleFav(fav.dataset.fav);
         fav.classList.toggle('active', on);
         fav.setAttribute('aria-pressed', String(on));
+      }
+      if (langBtn && window.I18N) {
+        e.preventDefault();
+        I18N.set(langBtn.dataset.langBtn);
       }
     });
   }

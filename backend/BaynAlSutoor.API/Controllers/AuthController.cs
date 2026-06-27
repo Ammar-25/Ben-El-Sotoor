@@ -1,5 +1,6 @@
 using BaynAlSutoor.Application.DTOs;
 using BaynAlSutoor.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaynAlSutoor.API.Controllers
@@ -36,6 +37,7 @@ namespace BaynAlSutoor.API.Controllers
         }
 
         [HttpPost("refresh-token")]
+        [AllowAnonymous]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto request)
         {
             var result = await _authService.RefreshTokenAsync(request);

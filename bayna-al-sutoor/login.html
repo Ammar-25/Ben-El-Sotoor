@@ -30,6 +30,7 @@
   <script defer src="js/services/author-service.js"></script>
   <script defer src="js/services/review-service.js"></script>
   <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/services/auth-service.js"></script>
   <script defer src="js/language.js"></script>
   <script defer src="js/theme.js"></script>
   <script defer src="js/cart.js"></script>
@@ -38,65 +39,78 @@
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
-  <header id="site-header"></header>
 
-  <main id="main">
-    <section class="section">
-      <div class="container">
-        <div class="auth-card">
-          <div class="auth-tabs" role="tablist" aria-label="Auth">
-            <button role="tab" data-tab="login" aria-selected="true" data-i18n="auth.login">تسجيل الدخول</button>
-            <button role="tab" data-tab="register" aria-selected="false" data-i18n="auth.register">إنشاء حساب</button>
+  <main id="main" class="auth-page">
+    <div class="auth-wrapper">
+      <div class="auth-header">
+        <div class="auth-brand">
+          <img src="assets/images/ui/logo-placeholder.png" alt="بين السطور" width="32" height="32" onerror="this.style.display='none'">
+          <span data-i18n="common.brand">بين السطور</span>
+        </div>
+        <div class="auth-controls">
+          <div class="lang-switch" role="group" aria-label="Language">
+            <button data-lang-btn="ar" aria-pressed="true">العربية</button>
+            <button data-lang-btn="en" aria-pressed="false">EN</button>
           </div>
-
-          <!-- LOGIN -->
-          <form id="login-form" novalidate>
-            <div class="field">
-              <label for="login-email" data-i18n="auth.email">البريد الإلكتروني</label>
-              <input class="input" id="login-email" type="email" required autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="login-pass" data-i18n="auth.password">كلمة المرور</label>
-              <input class="input" id="login-pass" type="password" required autocomplete="current-password">
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-size:.88rem">
-              <label style="display:flex;gap:.4rem;align-items:center"><input type="checkbox"> <span data-i18n="auth.remember">تذكّرني</span></label>
-              <a href="#" style="color:var(--brand)" data-i18n="auth.forgot">نسيت كلمة المرور؟</a>
-            </div>
-            <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.loginBtn">دخول</button>
-          </form>
-
-          <!-- REGISTER -->
-          <form id="register-form" hidden novalidate>
-            <div class="field">
-              <label for="reg-name" data-i18n="auth.name">الاسم الكامل</label>
-              <input class="input" id="reg-name" type="text" required autocomplete="name">
-            </div>
-            <div class="field">
-              <label for="reg-email" data-i18n="auth.email">البريد الإلكتروني</label>
-              <input class="input" id="reg-email" type="email" required autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="reg-pass" data-i18n="auth.password">كلمة المرور</label>
-              <input class="input" id="reg-pass" type="password" required autocomplete="new-password">
-            </div>
-            <div class="field">
-              <label for="reg-confirm" data-i18n="auth.confirmPassword">تأكيد كلمة المرور</label>
-              <input class="input" id="reg-confirm" type="password" required autocomplete="new-password">
-            </div>
-            <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.registerBtn">تسجيل</button>
-          </form>
-
-          <div class="divider"><span data-i18n="auth.or">أو</span></div>
-          <div style="display:flex;flex-direction:column;gap:.6rem">
-            <button class="social-btn" data-social="Google"><span data-i18n="auth.google">المتابعة عبر جوجل</span></button>
-            <button class="social-btn" data-social="Facebook"><span data-i18n="auth.facebook">المتابعة عبر فيسبوك</span></button>
-          </div>
+          <button class="theme-toggle" data-theme-toggle aria-label="Dark Mode" aria-pressed="false">
+            <span class="knob">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width: 14px; height: 14px; margin: auto;"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+            </span>
+          </button>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer id="site-footer"></footer>
+      <div class="auth-card">
+        <div class="auth-tabs" role="tablist" aria-label="Auth">
+          <button role="tab" data-tab="login" aria-selected="true" data-i18n="auth.login">تسجيل الدخول</button>
+          <button role="tab" data-tab="register" aria-selected="false" data-i18n="auth.register">إنشاء حساب</button>
+        </div>
+
+        <!-- LOGIN -->
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email" data-i18n="auth.email">البريد الإلكتروني</label>
+            <input class="input" id="login-email" type="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="login-pass" data-i18n="auth.password">كلمة المرور</label>
+            <input class="input" id="login-pass" type="password" required autocomplete="current-password">
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-size:.88rem">
+            <label style="display:flex;gap:.4rem;align-items:center"><input type="checkbox"> <span data-i18n="auth.remember">تذكّرني</span></label>
+            <a href="#" style="color:var(--brand)" data-i18n="auth.forgot">نسيت كلمة المرور؟</a>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.loginBtn">دخول</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="register-form" hidden novalidate>
+          <div class="field">
+            <label for="reg-name" data-i18n="auth.name">الاسم الكامل</label>
+            <input class="input" id="reg-name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="reg-email" data-i18n="auth.email">البريد الإلكتروني</label>
+            <input class="input" id="reg-email" type="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="reg-pass" data-i18n="auth.password">كلمة المرور</label>
+            <input class="input" id="reg-pass" type="password" required autocomplete="new-password">
+          </div>
+          <div class="field">
+            <label for="reg-confirm" data-i18n="auth.confirmPassword">تأكيد كلمة المرور</label>
+            <input class="input" id="reg-confirm" type="password" required autocomplete="new-password">
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.registerBtn">تسجيل</button>
+        </form>
+
+        <div class="divider"><span data-i18n="auth.or">أو</span></div>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <button class="social-btn" data-social="Google"><span data-i18n="auth.google">المتابعة عبر جوجل</span></button>
+          <button class="social-btn" data-social="Facebook"><span data-i18n="auth.facebook">المتابعة عبر فيسبوك</span></button>
+        </div>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
