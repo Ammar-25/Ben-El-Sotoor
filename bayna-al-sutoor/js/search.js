@@ -43,8 +43,8 @@ async function initSearch() {
 
   async function runSearch() {
     grid.innerHTML = '<div class="spinner" role="status" aria-label="Loading"></div>';
-    const res = await BookService.search({ q: state.q, category: state.category, lang: state.lang, maxPrice: state.maxPrice });
-    let books = res.data;
+    let books = await BookService.search({ q: state.q, category: state.category, maxPrice: state.maxPrice });
+    if (state.lang !== 'all') books = books.filter((b) => b.bookLanguage.en === state.lang || b.bookLanguage.ar === state.lang);
 
     if (countEl) countEl.textContent = `${books.length} ${I18N.t('common.results')}`;
 

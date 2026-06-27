@@ -179,12 +179,7 @@
     "facebook": "Continue with Facebook",
     "forgot": "Forgot your password?",
     "or": "or",
-    "remember": "Remember me",
-    "loginSuccess": "Successfully signed in ✓",
-    "registerSuccess": "Account successfully created ✓",
-    "validationError": "Please fill in all fields",
-    "passwordMismatch": "Passwords do not match",
-    "logout": "Sign out"
+    "remember": "Remember me"
   },
   "profile": {
     "title": "My Profile",

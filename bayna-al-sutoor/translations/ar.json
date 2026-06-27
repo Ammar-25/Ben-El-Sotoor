@@ -179,12 +179,7 @@
     "facebook": "المتابعة عبر فيسبوك",
     "forgot": "نسيت كلمة المرور؟",
     "or": "أو",
-    "remember": "تذكّرني",
-    "loginSuccess": "تم تسجيل الدخول بنجاح ✓",
-    "registerSuccess": "تم إنشاء الحساب بنجاح ✓",
-    "validationError": "الرجاء ملء جميع الحقول",
-    "passwordMismatch": "كلمتا المرور غير متطابقتين",
-    "logout": "تسجيل الخروج"
+    "remember": "تذكّرني"
   },
   "profile": {
     "title": "حسابي",
