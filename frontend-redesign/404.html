@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!-- 404.html — Friendly not-found page with classic library aesthetic. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الصفحة غير موجودة | بين السطور</title>
+  <meta name="description" content="عذرًا، الصفحة التي تبحث عنها غير موجودة. عُد إلى الرئيسية أو ابحث عن كتابك.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://baynalsutoor.example/404.html">
+
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    .not-found-section {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .not-found-inner {
+      max-width: 600px;
+    }
+    .not-found-code {
+      font-family: var(--font-english);
+      font-size: clamp(5rem, 18vw, 9rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--brand-600);
+      opacity: .15;
+      letter-spacing: -4px;
+      display: block;
+      margin-bottom: -1.5rem;
+      position: relative;
+      z-index: 0;
+    }
+    .not-found-ornament {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .not-found-inner h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--brand-600);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .not-found-inner p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 44ch;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+      font-family: var(--font-heading);
+      font-style: italic;
+    }
+    .not-found-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .not-found-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem 0;
+      color: var(--text-muted);
+      font-size: .85rem;
+    }
+    .not-found-divider::before,
+    .not-found-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    /* Quick search */
+    .not-found-search {
+      display: flex;
+      gap: .5rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .not-found-search input {
+      flex: 1;
+      padding: .85rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--text);
+      transition: border-color var(--transition);
+    }
+    .not-found-search input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .not-found-search input::placeholder { color: var(--text-muted); }
+  </style>
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchForm = document.getElementById('quick-search-form');
+      if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const q = document.getElementById('quick-search-input').value.trim();
+          if (q) window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="not-found-section">
+      <div class="not-found-inner">
+        <!-- Giant faded 404 behind the content -->
+        <span class="not-found-code" aria-hidden="true">404</span>
+        <!-- Book icon as main visual -->
+        <span class="not-found-ornament" aria-hidden="true">📖</span>
+
+        <h1 data-i18n="errors.notFoundTitle">الصفحة غير موجودة</h1>
+        <p data-i18n="errors.notFoundText">يبدو أن الصفحة التي تبحث عنها قد ضاعت بين السطور.</p>
+
+        <div class="not-found-actions">
+          <a class="btn btn-primary btn-lg" href="index.html" data-i18n="errors.backHome">العودة للرئيسية</a>
+          <a class="btn btn-outline btn-lg" href="library.html">تصفّح المكتبة</a>
+        </div>
+
+        <div class="not-found-divider">أو ابحث عن كتاب</div>
+
+        <form class="not-found-search" id="quick-search-form" role="search" novalidate>
+          <label class="visually-hidden" for="quick-search-input">ابحث عن كتاب</label>
+          <input type="search" id="quick-search-input" placeholder="عنوان أو مؤلف..." autocomplete="off">
+          <button type="submit" class="btn btn-primary" aria-label="بحث">🔍</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

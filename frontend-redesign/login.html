@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- login.html — Login / Register tabs + social auth (demo, front-end only). -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول | بين السطور</title>
+  <meta name="description" content="سجّل الدخول أو أنشئ حسابًا جديدًا في بين السطور للوصول إلى مكتبتك ومفضلتك.">
+  <link rel="canonical" href="https://baynalsutoor.example/login.html">
+  <meta name="robots" content="noindex">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="تسجيل الدخول | بين السطور">
+  <meta property="og:description" content="ادخل إلى حسابك في بين السطور.">
+  <meta property="og:image" content="assets/images/banners/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main" class="min-h-screen flex" style="background: #F5EFE3; background-image: var(--paper-texture);">
+      <!-- Left panel -->
+      <div class="hidden lg:flex flex-1 relative items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&h=1200&fit=crop&auto=format'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0" style="background: rgba(30,12,3,.75);"></div>
+        <div class="relative z-10 text-center p-12">
+          <div style="color: #B88A3B; font-size: 3rem; font-family: 'Amiri', serif; line-height: 1; margin-bottom: 16px;">❧</div>
+          <div style="font-family: 'Amiri', serif; font-size: 2.2rem; color: #F5EFE3; font-weight: 700;">بين السطور</div>
+          <div style="font-family: 'Lato', sans-serif; font-size: 0.65rem; color: #B88A3B; letter-spacing: 0.25em; margin-top: 8px;">BETWEEN THE LINES</div>
+          <p class="mt-8 text-sm leading-relaxed" style="font-family: var(--font); color: rgba(245,239,227,.6); max-width: 320px;" data-i18n="auth.slogan">مكتبتك الرقمية للأدب العربي والعالمي في مكان واحد</p>
+        </div>
+      </div>
+
+      <!-- Form panel -->
+      <div class="flex-1 flex items-center justify-center px-6 py-12">
+        <div class="w-full max-w-md">
+          <a href="index.html" class="inline-flex items-center gap-2 mb-10 text-sm transition-colors duration-200" style="color: #8A6848; font-family: var(--font);" onmouseenter="this.style.color='#6B4423'" onmouseleave="this.style.color='#8A6848'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4 rtl:rotate-180"><path d="M15 18l-6-6 6-6"/></svg>
+            <span data-i18n="auth.backHome">العودة للرئيسية</span>
+          </a>
+
+          <div class="rounded p-8" style="background: #FCFAF5; border: 1px solid #DDD0BB; box-shadow: 0 8px 40px rgba(90,55,30,.1);">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <div class="h-px w-16" style="background: linear-gradient(to right, transparent, #B88A3B)"></div>
+                <div style="color: #B88A3B; font-size: 1.2rem;">✦</div>
+                <div class="h-px w-16" style="background: linear-gradient(to left, transparent, #B88A3B)"></div>
+            </div>
+            
+            <h2 class="text-center mb-2" style="font-family: var(--font-heading); font-size: 1.6rem; color: #4A2E1A;" data-i18n="auth.loginTitle">مرحباً بعودتك</h2>
+            <p class="text-center mb-8 text-sm" style="font-family: var(--font); color: #8A6848;" data-i18n="auth.loginSub">سجّل دخولك لمكتبتك</p>
+
+            <form id="auth-form" class="space-y-4">
+              <div id="auth-error" class="hidden rounded p-3 text-sm text-center" style="background: rgba(220,53,69,0.1); color: #dc3545; border: 1px solid rgba(220,53,69,0.3);"></div>
+              
+              <div>
+                <label class="block text-xs mb-2" style="font-family: var(--font); color: #6B4423;" data-i18n="auth.email">البريد الإلكتروني</label>
+                <input name="email" type="email" required dir="ltr" placeholder="you@example.com" class="w-full px-4 py-3 rounded outline-none text-sm" style="background: #F8F4EC; border: 1px solid #DDD0BB; font-family: 'Lato', sans-serif; color: #2A1A0E;">
+              </div>
+              <div>
+                <label class="block text-xs mb-2" style="font-family: var(--font); color: #6B4423;" data-i18n="auth.password">كلمة المرور</label>
+                <input name="password" type="password" required dir="ltr" placeholder="••••••••" class="w-full px-4 py-3 rounded outline-none text-sm" style="background: #F8F4EC; border: 1px solid #DDD0BB; font-family: 'Lato', sans-serif; color: #2A1A0E;">
+              </div>
+
+              <button type="submit" class="w-full mt-6 py-3.5 rounded text-sm transition-colors duration-200" style="background: #6B4423; color: #F5EFE3; font-family: var(--font); letter-spacing: 0.05em;" onmouseenter="this.style.background='#B88A3B'" onmouseleave="this.style.background='#6B4423'" data-i18n="auth.loginSubmit">تسجيل الدخول</button>
+            </form>
+
+            <div class="mt-6 text-center">
+              <a href="register.html" class="inline-block text-xs transition-colors duration-200" style="font-family: var(--font); color: #8A6848;" onmouseenter="this.style.color='#6B4423'" onmouseleave="this.style.color='#8A6848'" data-i18n="auth.noAccount">لا تملك حساباً؟ أنشئ واحداً</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

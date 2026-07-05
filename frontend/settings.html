@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<!-- settings.html — User account settings: theme, language, personal data, notifications. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعدادات الحساب | بين السطور</title>
+  <meta name="description" content="تخصيص حسابك في بين السطور: تغيير المظهر، اللغة، البيانات الشخصية وإعدادات الإشعارات.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://baynalsutoor.example/settings.html">
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/pages/inner.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* Settings page specialized styling */
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 3rem;
+      align-items: start;
+      padding: 4rem 0;
+    }
+
+    /* Sidebar nav */
+    .settings-nav {
+      background: var(--surface);
+      background-image: var(--paper-texture);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+    .settings-nav-header {
+      padding: 1.5rem;
+      background: var(--brand-600);
+      color: var(--surface);
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
+    }
+    .settings-nav a {
+      display: block;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      transition: all var(--transition);
+      font-size: .95rem;
+    }
+    .settings-nav a:last-child { border-bottom: none; }
+    .settings-nav a:hover { background: var(--surface-2); color: var(--brand-600); padding-inline-start: 2rem; }
+    .settings-nav a.active { background: rgba(184, 138, 59, 0.08); color: var(--brand-600); border-inline-start: 3px solid var(--accent); }
+
+    /* Cards */
+    .settings-card {
+      background: var(--surface);
+      background-image: var(--paper-texture);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .settings-card::before {
+      content: ''; position: absolute; inset: 4px;
+      border: 1px solid rgba(184, 138, 59, 0.1);
+      pointer-events: none; border-radius: 2px;
+    }
+    .settings-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--brand-600);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .settings-card-title span { font-size: 1.5rem; }
+
+    /* Theme swatches */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .theme-option {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      background: var(--surface-2);
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-option:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .theme-option.selected { border-color: var(--accent); color: var(--brand-600); box-shadow: var(--shadow-md); }
+    .theme-option.selected::after {
+      content: '✦'; position: absolute; top: .5rem; inset-inline-end: .75rem;
+      color: var(--accent); font-size: .9rem;
+    }
+    .theme-preview-day {
+      height: 80px; border-radius: 4px; margin-bottom: 1rem;
+      background: linear-gradient(135deg, #F5EFE3 0%, #FCFAF5 50%, #DDD0BB 100%);
+      border: 1px solid #DDD0BB;
+      display: flex; align-items: center; justify-content: center;
+      color: #4A2E1A; font-size: 1.8rem;
+    }
+    .theme-preview-night {
+      height: 80px; border-radius: 4px; margin-bottom: 1rem;
+      background: linear-gradient(135deg, #1A1412 0%, #241A15 50%, #4A2E1A 100%);
+      border: 1px solid #4A2E1A;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    /* Language row */
+    .lang-grid { display: flex; gap: 1rem; }
+    .lang-option {
+      flex: 1; padding: 1.2rem 1rem; border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); cursor: pointer; text-align: center;
+      background: var(--surface-2); font-weight: 700; font-size: 1.1rem; color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .lang-option:hover { border-color: var(--accent); color: var(--brand-600); }
+    .lang-option.selected { border-color: var(--accent); background: var(--surface); color: var(--brand-600); }
+
+    /* Toggle switches */
+    .toggle-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-row-label { font-weight: 600; color: var(--text); }
+    .toggle-row-desc { font-size: .9rem; color: var(--text-muted); margin-top: .2rem; }
+    .toggle-switch { position: relative; width: 52px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute; inset: 0;
+      background: var(--border); border-radius: var(--radius-pill);
+      cursor: pointer; transition: background var(--transition);
+    }
+    .toggle-track::after {
+      content: ''; position: absolute;
+      top: 4px; inset-inline-start: 4px;
+      width: 20px; height: 20px;
+      background: var(--surface); border-radius: 50%;
+      transition: transform var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--accent); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(24px); }
+    [dir="rtl"] .toggle-switch input:checked + .toggle-track::after { transform: translateX(-24px); }
+
+    /* Danger zone */
+    .danger-zone {
+      border: 1px solid rgba(158, 78, 63, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 2rem;
+      background: rgba(158, 78, 63, 0.04);
+    }
+    .danger-zone h3 { color: var(--danger); font-family: var(--font-heading); margin-bottom: 1rem; }
+
+    @media (max-width: 860px) {
+      .settings-layout { grid-template-columns: 1fr; }
+      .settings-nav { position: static; }
+      .settings-nav-links { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem; }
+      .settings-nav a { border-bottom: none; padding: .6rem 1rem; border-radius: var(--radius-sm); }
+      .theme-grid, .lang-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ── Theme switcher (uses the same key as theme.js: 'bayn_theme') ──
+      const LS_THEME_KEY = 'bayn_theme';
+      const themeOptions = document.querySelectorAll('.theme-option[data-theme-value]');
+
+      function applyThemeChoice(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(LS_THEME_KEY, theme);
+        themeOptions.forEach(opt => opt.classList.toggle('selected', opt.dataset.themeValue === theme));
+        // Sync with navbar toggles wired by theme.js
+        document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+          btn.setAttribute('aria-pressed', String(theme === 'dark'));
+        });
+      }
+
+      themeOptions.forEach(opt => {
+        opt.addEventListener('click', () => applyThemeChoice(opt.dataset.themeValue));
+      });
+
+      // Init from current state
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      applyThemeChoice(current);
+
+      // ── Language switcher ──
+      const langOptions = document.querySelectorAll('.lang-option[data-lang-value]');
+      function applyLangChoice(lang) {
+        langOptions.forEach(o => o.classList.toggle('selected', o.dataset.langValue === lang));
+        if (window.I18N) I18N.set(lang);
+      }
+      langOptions.forEach(opt => {
+        opt.addEventListener('click', () => applyLangChoice(opt.dataset.langValue));
+      });
+      // Init
+      document.addEventListener('i18n:ready', () => {
+        applyLangChoice(window.I18N ? I18N.lang : 'ar');
+      });
+
+      // ── Form submit (profile update) ──
+      const profileForm = document.getElementById('profile-form');
+      if (profileForm) {
+        profileForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (window.UI) UI.toast('تم حفظ التغييرات بنجاح', 'success');
+        });
+      }
+
+      // ── Password form ──
+      const passForm = document.getElementById('password-form');
+      if (passForm) {
+        passForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newPass = document.getElementById('new-password').value;
+          const confirm = document.getElementById('confirm-password').value;
+          if (newPass !== confirm) {
+            if (window.UI) UI.toast('كلمتا المرور غير متطابقتين', 'danger');
+            return;
+          }
+          if (window.UI) UI.toast('تم تغيير كلمة المرور بنجاح', 'success');
+        });
+      }
+
+      // ── Settings nav ──
+      const navLinks = document.querySelectorAll('.settings-nav a[data-section]');
+      const sections = document.querySelectorAll('.settings-card[id]');
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          const target = document.getElementById(link.dataset.section);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Highlight active section on scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === entry.target.id));
+          }
+        });
+      }, { threshold: 0.5 });
+      sections.forEach(s => observer.observe(s));
+    });
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <h1>إعدادات الحساب</h1>
+        <p>تخصيص تجربتك في مكتبة بين السطور</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="settings-layout">
+
+        <!-- Sidebar nav -->
+        <nav class="settings-nav" aria-label="Settings navigation">
+          <div class="settings-nav-header">القائمة</div>
+          <div class="settings-nav-links">
+            <a href="#" data-section="section-appearance" class="active">المظهر والألوان</a>
+            <a href="#" data-section="section-language">اللغة والمنطقة</a>
+            <a href="#" data-section="section-profile">البيانات الشخصية</a>
+            <a href="#" data-section="section-security">كلمة المرور</a>
+            <a href="#" data-section="section-notifications">الإشعارات</a>
+            <a href="#" data-section="section-danger">حذف الحساب</a>
+          </div>
+        </nav>
+
+        <!-- Main settings -->
+        <div>
+
+          <!-- Appearance -->
+          <div class="settings-card" id="section-appearance">
+            <h2 class="settings-card-title"><span>🕯️</span> المظهر والألوان</h2>
+            <p style="color:var(--text-muted); margin-bottom:2rem;">اختر بين مكتبة النهار بضوئها الورقي الدافئ أو مكتبة الليل بأجوائها الخشبية العميقة.</p>
+            <div class="theme-grid">
+              <button class="theme-option" data-theme-value="light" type="button">
+                <div class="theme-preview-day">☀️</div>
+                <div>مكتبة النهار</div>
+                <div style="font-size:.85rem; font-weight:400; margin-top:.3rem; color:var(--text-muted);">الورق الكلاسيكي والضوء الدافئ</div>
+              </button>
+              <button class="theme-option" data-theme-value="dark" type="button">
+                <div class="theme-preview-night">🌙</div>
+                <div>مكتبة الليل</div>
+                <div style="font-size:.85rem; font-weight:400; margin-top:.3rem; color:var(--text-muted);">الخشب الداكن والإضاءة الخافتة</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Language -->
+          <div class="settings-card" id="section-language">
+            <h2 class="settings-card-title"><span>🌐</span> اللغة والمنطقة</h2>
+            <p style="color:var(--text-muted); margin-bottom:2rem;">اختر لغة واجهة التصفح.</p>
+            <div class="lang-grid">
+              <button class="lang-option" data-lang-value="ar" type="button">
+                العربية<br><span style="font-size:.85rem; font-weight:400; color:var(--text-muted);">Arabic</span>
+              </button>
+              <button class="lang-option" data-lang-value="en" type="button">
+                English<br><span style="font-size:.85rem; font-weight:400; color:var(--text-muted);">الإنجليزية</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Profile data -->
+          <div class="settings-card" id="section-profile">
+            <h2 class="settings-card-title"><span>👤</span> البيانات الشخصية</h2>
+            <form id="profile-form" novalidate>
+              <div class="field">
+                <label for="fullname">الاسم الكامل</label>
+                <input type="text" id="fullname" class="input" value="محمد علي" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="user-email">البريد الإلكتروني</label>
+                <input type="email" id="user-email" class="input" value="mohammed@example.com" autocomplete="email">
+              </div>
+              <div class="field">
+                <label for="user-bio">نبذة شخصية</label>
+                <textarea id="user-bio" class="input" rows="3" placeholder="اكتب نبذة مختصرة عنك..."></textarea>
+              </div>
+              <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                <a href="profile.html" class="btn btn-ghost">العودة للملف الشخصي</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Security -->
+          <div class="settings-card" id="section-security">
+            <h2 class="settings-card-title"><span>🔑</span> كلمة المرور</h2>
+            <form id="password-form" novalidate>
+              <div class="field">
+                <label for="current-password">كلمة المرور الحالية</label>
+                <input type="password" id="current-password" class="input" placeholder="••••••••" autocomplete="current-password">
+              </div>
+              <div class="field">
+                <label for="new-password">كلمة المرور الجديدة</label>
+                <input type="password" id="new-password" class="input" placeholder="••••••••" autocomplete="new-password">
+              </div>
+              <div class="field">
+                <label for="confirm-password">تأكيد كلمة المرور الجديدة</label>
+                <input type="password" id="confirm-password" class="input" placeholder="••••••••" autocomplete="new-password">
+              </div>
+              <div style="margin-top:2rem;">
+                <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-card" id="section-notifications">
+            <h2 class="settings-card-title"><span>🔔</span> الإشعارات</h2>
+            <div>
+              <div class="toggle-row">
+                <div>
+                  <div class="toggle-row-label">إشعارات البريد الإلكتروني</div>
+                  <div class="toggle-row-desc">استلام تنبيهات وعروض عبر البريد</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-email" checked>
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <div class="toggle-row-label">النشرة البريدية الأسبوعية</div>
+                  <div class="toggle-row-desc">أبرز الإصدارات والعروض كل أسبوع</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-newsletter" checked>
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <div class="toggle-row-label">إشعارات المتصفح</div>
+                  <div class="toggle-row-desc">تلقي إشعارات مباشرة في المتصفح</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-browser">
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <div class="toggle-row-label">إشعارات الكتب الجديدة</div>
+                  <div class="toggle-row-desc">يُنبئك فور إضافة كتاب في مجال اهتمامك</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notif-new-books" checked>
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+            <div style="margin-top:2rem;">
+              <button type="button" class="btn btn-primary" onclick="if(window.UI) UI.toast('تم حفظ إعدادات الإشعارات', 'success')">حفظ الإعدادات</button>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-card" id="section-danger">
+            <h2 class="settings-card-title" style="color:var(--danger)"><span>⚠️</span> المنطقة الحساسة</h2>
+            <div class="danger-zone">
+              <h3>حذف الحساب نهائياً</h3>
+              <p style="color:var(--text-muted); margin-bottom:1.5rem; line-height:1.8;">سيؤدي هذا الإجراء إلى حذف حسابك وجميع بياناتك بشكل دائم لا يمكن التراجع عنه. يرجى التأكد قبل المتابعة.</p>
+              <button type="button" class="btn" style="background:var(--danger);color:var(--surface);border:none;" onclick="if(confirm('هل أنت متأكد من حذف حسابك؟')) alert('سيتم حذف الحساب.')">حذف الحساب</button>
+            </div>
+          </div>
+
+        </div><!-- /main settings -->
+      </div><!-- /layout -->
+    </div><!-- /container -->
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

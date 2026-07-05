@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل الكتاب | بين السطور</title>
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/pages/inner.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* Book Details Specialized Layout - Physical Book Feel */
+    .book-details-hero {
+      background: var(--brand-700);
+      background-image: var(--paper-texture);
+      padding: 6rem 0;
+      position: relative;
+      border-bottom: 4px solid var(--accent);
+    }
+    .book-details-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(51, 31, 16, 0.95), rgba(51, 31, 16, 0.7));
+      z-index: 0;
+    }
+    .bd-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .bd-cover {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      transform: perspective(1000px) rotateY(-5deg);
+      transform-style: preserve-3d;
+      border: 1px solid rgba(184, 138, 59, 0.4);
+      background: var(--surface-2);
+    }
+    .bd-cover::before {
+      content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 15px;
+      background: linear-gradient(to right, rgba(255,255,255,0.4), transparent);
+      z-index: 2;
+    }
+    .bd-cover img { width: 100%; height: auto; display: block; }
+    
+    .bd-info { color: var(--surface); padding-top: 1rem; }
+    .bd-info h1 { font-family: var(--font-heading); font-size: 3rem; font-weight: 700; color: var(--surface); text-shadow: 0 4px 12px rgba(0,0,0,0.5); margin-bottom: .5rem; }
+    .bd-author { font-size: 1.2rem; color: var(--accent); margin-bottom: 1.5rem; font-family: var(--font-heading); font-style: italic; }
+    .bd-meta { display: flex; gap: 1.5rem; color: rgba(252,250,245,.8); font-size: .95rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(252,250,245,.2); padding-bottom: 1rem; }
+    .bd-desc { font-size: 1.1rem; line-height: 1.8; color: rgba(252,250,245,.9); margin-bottom: 2rem; }
+    
+    .bd-actions { display: flex; gap: 1rem; margin-bottom: 2rem; }
+    .bd-actions .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--brand-700); }
+    .bd-actions .btn-primary:hover { background: #d09c42; }
+    
+    /* Tabs System */
+    .bd-tabs-container { margin-top: 4rem; }
+    .bd-tabs { display: flex; gap: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .bd-tab { padding: 1rem 2rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all var(--transition); border-bottom: 3px solid transparent; }
+    .bd-tab.active { color: var(--brand-600); border-color: var(--brand-600); }
+    .bd-tab:hover:not(.active) { color: var(--accent); }
+    
+    .bd-panel { display: none; animation: fade-in .4s ease; padding: 2rem 0; }
+    .bd-panel.active { display: block; }
+    
+    @media (max-width: 900px) {
+      .bd-layout { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .bd-cover { max-width: 280px; margin: 0 auto; transform: none; }
+      .bd-meta { justify-content: center; }
+      .bd-actions { justify-content: center; }
+    }
+  </style>
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.bd-tab');
+      const panels = document.querySelectorAll('.bd-panel');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          panels.forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById('panel-' + tab.dataset.target).classList.add('active');
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="book-details-hero">
+      <div class="container bd-layout">
+        <div class="bd-cover">
+          <img src="assets/images/books/book-1.jpg" alt="غلاف الكتاب">
+        </div>
+        <div class="bd-info">
+          <h1>تاريخ الفلسفة اليونانية</h1>
+          <div class="bd-author">تأليف: يوسف كرم</div>
+          <div class="bd-meta">
+            <span>التصنيف: فلسفة</span>
+            <span>التقييم: 4.8 ★</span>
+            <span>الصفحات: 342</span>
+          </div>
+          <div class="bd-desc">
+            رحلة عميقة في جذور الفكر الإنساني وتطور الفلسفة اليونانية من طاليس حتى أرسطو. يقدم هذا الكتاب خلاصة الفكر الإغريقي القديم بأسلوب أدبي رصين يجمع بين العمق الأكاديمي وسلاسة الطرح.
+          </div>
+          <div class="bd-actions">
+            <button class="btn btn-primary btn-lg">أضف إلى السلة - 45 ر.س</button>
+            <a href="read-sample.html" class="btn btn-outline btn-lg" style="color:var(--surface); border-color:rgba(252,250,245,.4);">قراءة عينة</a>
+            <button class="btn btn-ghost fav-btn" style="position:static; width:auto; padding:0 1rem; border:1px solid rgba(252,250,245,.4); border-radius:var(--radius-sm)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container bd-tabs-container">
+        <div class="bd-tabs" role="tablist">
+          <button class="bd-tab active" data-target="overview">نظرة عامة</button>
+          <button class="bd-tab" data-target="reviews">المراجعات</button>
+          <button class="bd-tab" data-target="author">عن المؤلف</button>
+          <button class="bd-tab" data-target="quotes">اقتباسات</button>
+          <button class="bd-tab" data-target="similar">كتب مشابهة</button>
+        </div>
+
+        <div class="bd-panel active" id="panel-overview">
+          <div style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); max-width: 800px;">
+            <p>يُعد هذا الكتاب من أهم المراجع العربية التي تناولت الفكر اليوناني. يستعرض الكاتب بأسلوب منهجي دقيق تطور المدارس الفلسفية، بدءاً من الفلاسفة الطبيعيين الأوائل، مروراً بالعصر الذهبي لسقراط وأفلاطون، وصولاً إلى الواقعية الأرسطية.</p>
+            <br>
+            <p>لا يكتفي الكتاب بسرد الأفكار، بل يغوص في أعماق السياق التاريخي والثقافي الذي أنتج هذه الفلسفات، مما يجعله تجربة قرائية ممتعة تضيء زوايا العقل والروح.</p>
+          </div>
+        </div>
+
+        <div class="bd-panel" id="panel-reviews">
+          <div class="state-block">
+            <div class="state-icon">★</div>
+            <p>سيتم تحميل التقييمات قريباً.</p>
+          </div>
+        </div>
+
+        <div class="bd-panel" id="panel-author">
+          <div style="display:flex; gap:2rem; align-items:center;">
+            <img src="assets/images/ui/author-placeholder.png" alt="" style="width:120px; height:120px; border-radius:50%; border:3px solid var(--accent); object-fit:cover;">
+            <div>
+              <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:var(--brand-600); margin-bottom:.5rem;">يوسف كرم</h3>
+              <p style="color:var(--text-muted); max-width:600px;">فيلسوف ومفكر مصري، من أبرز من أرخوا للفلسفة في العالم العربي. تُرجمت أعماله للعديد من اللغات وأسست لمنهجية أكاديمية صارمة في دراسة تاريخ الفكر.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bd-panel" id="panel-quotes">
+          <blockquote style="font-family:var(--font-heading); font-size:1.4rem; color:var(--brand-600); border-inline-start:4px solid var(--accent); padding-inline-start:1.5rem; margin:2rem 0; font-style:italic;">
+            "إن الفلسفة تبدأ بالدهشة، وتنتهي بالدهشة، وما بينهما هو رحلة العقل في محاولة فهم ذاته."
+          </blockquote>
+        </div>
+
+        <div class="bd-panel" id="panel-similar">
+          <div class="grid grid-books">
+            <!-- Simulated similar books -->
+            <div class="book-card">
+              <div class="book-cover"><img src="assets/images/books/book-2.jpg" alt=""></div>
+              <div class="book-body"><div class="book-title">تاريخ الفلسفة الحديثة</div><div class="book-author">يوسف كرم</div></div>
+            </div>
+            <div class="book-card">
+              <div class="book-cover"><img src="assets/images/books/book-3.jpg" alt=""></div>
+              <div class="book-body"><div class="book-title">قصة الفلسفة</div><div class="book-author">ويل ديورانت</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

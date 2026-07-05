@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قراءة عينة | بين السطور</title>
+  
+  <link rel="stylesheet" href="css/global.css">
+
+  <style>
+    /* Specialized Read Sample Layout - Ancient Manuscript */
+    body {
+      background: #F5EFE3; /* Old Paper */
+      background-image: var(--paper-texture);
+      color: #4A2E1A; /* Dark Wood Ink */
+      font-family: var(--font-heading); /* Serif exclusively */
+      padding: 0; margin: 0;
+      overflow-x: hidden;
+    }
+    .read-header {
+      position: sticky; top: 0; z-index: 100;
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(245, 239, 227, 0.95);
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(184, 138, 59, 0.3); /* Gold */
+    }
+    .read-back {
+      font-family: var(--font); font-weight: 700; color: #6B4423; font-size: .9rem;
+      display: flex; align-items: center; gap: .5rem; transition: color 0.3s;
+    }
+    .read-back:hover { color: #B88A3B; }
+    .read-title { font-size: 1.1rem; font-weight: 700; color: #4A2E1A; }
+    
+    .manuscript-container {
+      max-width: 720px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    .chapter-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #331F10;
+      position: relative;
+    }
+    .chapter-title::after {
+      content: '✦'; display: block; font-size: 1.5rem; color: #B88A3B; margin-top: 1rem; opacity: 0.6;
+    }
+    .manuscript-text {
+      font-size: 1.35rem;
+      line-height: 2.2;
+      text-align: justify;
+      color: #331F10;
+    }
+    .manuscript-text p {
+      margin-bottom: 2rem;
+    }
+    /* Drop cap */
+    .manuscript-text p:first-of-type::first-letter {
+      font-size: 4rem;
+      float: right;
+      margin-left: 1rem;
+      line-height: 1;
+      color: #B88A3B;
+    }
+    
+    .read-footer {
+      text-align: center;
+      margin-top: 6rem;
+      padding-bottom: 4rem;
+    }
+  </style>
+
+</head>
+<body>
+  
+  <div class="read-header">
+    <a href="book-details.html" class="read-back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"></path><path d="M5 10h11a4 4 0 1 1 0 8h-1"></path></svg>
+      العودة للكتاب
+    </a>
+    <div class="read-title">تاريخ الفلسفة اليونانية - عينة مجانية</div>
+    <div style="width:100px"></div>
+  </div>
+
+  <div class="manuscript-container">
+    <h1 class="chapter-title">الفصل الأول<br>فجر الفلسفة</h1>
+    
+    <div class="manuscript-text">
+      <p>بدأت الفلسفة اليونانية في مدينة ميلطية على الساحل الغربي لآسيا الصغرى، في أوائل القرن السادس قبل الميلاد. لم يكن ذلك مجرد انتقال من الأسطورة إلى العقل، بل كان ثورة حقيقية في طريقة نظر الإنسان إلى الكون.</p>
+      
+      <p>كان طاليس أول من طرح السؤال الجوهري: "ما هو الأصل الذي تصدر عنه الأشياء وتعود إليه؟" ولم تكن إجابته بأن "الماء هو أصل كل شيء" هي ما خلد اسمه في تاريخ الفكر، بل حقيقة أنه تجرأ على تفسير الطبيعة بالطبيعة ذاتها، متجاوزاً التفسيرات الميثولوجية التي سادت لقرون.</p>
+      
+      <p>ومع تلميذه أنكسماندر، تطور هذا الفكر ليطرح فكرة "اللامتناهي" أو الـ "أبيرون"، كجوهر أول لا شكل له ولا حدود، منه تنبثق العوالم وإليه تعود في دورة كونية أبدية يحكمها قانون العدالة والضرورة.</p>
+      
+      <p>هؤلاء المفكرون الأوائل، الذين عُرفوا بالطبيعيين، وضعوا البذرة التي أثمرت لاحقاً أعظم الإنجازات العقلية للبشرية، مؤذنين بفجر جديد للمعرفة الإنسانية.</p>
+    </div>
+    
+    <div class="read-footer">
+      <a href="book-details.html" class="btn btn-primary" style="font-family:var(--font); font-size:1rem; padding:1rem 2rem; background:#6B4423; color:#F5EFE3; border:none; border-radius:6px; cursor:pointer; font-weight:700;">
+        شراء الكتاب لإكمال القراءة
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

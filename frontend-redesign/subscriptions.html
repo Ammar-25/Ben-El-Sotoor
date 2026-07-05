@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- subscriptions.html — Plans, comparison table, FAQ, CTA. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الاشتراكات | بين السطور</title>
+  <meta name="description" content="خطط اشتراك مرنة في بين السطور: كتاب واحد، شهري، سنوي وبريميوم، مع مقارنة كاملة وأسئلة شائعة.">
+  <link rel="canonical" href="https://baynalsutoor.example/subscriptions.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="الاشتراكات | بين السطور">
+  <meta property="og:description" content="اقرأ بلا حدود مع خطط تناسب الجميع.">
+  <meta property="og:image" content="assets/images/banners/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="الاشتراكات | بين السطور">
+  <meta name="twitter:description" content="اقرأ بلا حدود مع خطط تناسب الجميع.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/pages/inner.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/subscriptions.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main" class="min-h-screen pt-28 pb-20" style="background: #F5EFE3; background-image: var(--paper-texture);">
+      <div class="max-w-6xl mx-auto px-6">
+        
+        <div class="mb-10 text-center">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <div class="h-px w-16" style="background: linear-gradient(to right, transparent, #B88A3B)"></div>
+                <div style="color: #B88A3B; font-size: 1.2rem;">✦</div>
+                <div class="h-px w-16" style="background: linear-gradient(to left, transparent, #B88A3B)"></div>
+            </div>
+            <h1 class="mb-2" style="font-family: var(--font-heading); font-size: clamp(1.8rem,4vw,3rem); color: #4A2E1A;" data-i18n="subscriptions.title">اختر خطتك</h1>
+            <p style="font-family: var(--font); color: #8A6848; font-size: 1.1rem;" data-i18n="subscriptions.subtitle">خطط مرنة تناسب كل قارئ</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20" id="plans-grid"><div class="spinner mx-auto col-span-full"></div></div>
+
+        <!-- Comparison table -->
+        <div class="mb-20">
+            <h2 class="text-center mb-8" style="font-family: var(--font-heading); font-size: 1.8rem; color: #4A2E1A;" data-i18n="subscriptions.comparison">مقارنة الخطط</h2>
+            <div class="rounded overflow-hidden" style="border: 1px solid #DDD0BB;">
+                <table class="w-full" id="compare-table" style="border-collapse: collapse;"></table>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="mb-20">
+            <h2 class="text-center mb-8" style="font-family: var(--font-heading); font-size: 1.8rem; color: #4A2E1A;" data-i18n="subscriptions.faq">الأسئلة الشائعة</h2>
+            <div class="max-w-3xl mx-auto space-y-4" id="faq-list"></div>
+        </div>
+
+        <!-- CTA Banner -->
+        <div class="rounded p-12 text-center relative overflow-hidden" style="background: linear-gradient(135deg, #4A2E1A, #6B4423); border: 1px solid rgba(184,138,59,.3);">
+            <div class="absolute inset-0 opacity-5" style="background-image: var(--paper-texture);"></div>
+            <div class="relative z-10">
+                <div class="text-3xl mb-4" style="color: #B88A3B;">❧</div>
+                <h2 class="mb-4" style="font-family: var(--font-heading); font-size: 2.2rem; color: #F5EFE3;" data-i18n="sections.subsCta">اقرأ بلا حدود</h2>
+                <p class="mb-8 text-sm" style="font-family: var(--font); color: rgba(245,239,227,.7);" data-i18n="sections.subsCtaSub">اشترك الآن واحصل على وصول كامل لمكتبتنا</p>
+                <a class="inline-block px-8 py-3.5 rounded text-sm transition-all duration-300" href="login.html" style="background: #B88A3B; color: #F5EFE3; font-family: var(--font); font-weight: 700;" onmouseenter="this.style.background='#D4AF37'" onmouseleave="this.style.background='#B88A3B'" data-i18n="subscriptions.subscribe">اشترك الآن</a>
+            </div>
+        </div>
+      </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

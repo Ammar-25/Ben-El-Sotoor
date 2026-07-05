@@ -1,78 +1,89 @@
 /* =====================================================================
-   global.css — Design system foundation for "بين السطور"
+   global.css — Premium Arabic Library Design System
    ---------------------------------------------------------------------
    Purpose: CSS custom properties (design tokens), theme definitions
    (light/dark), CSS reset, base typography, layout primitives, buttons,
    badges, and shared utilities used across ALL pages.
-
-   How to re-theme: change the token values under :root (light) and
-   [data-theme="dark"]. Every component reads from these variables, so a
-   single edit here cascades site-wide. Do not hardcode colors elsewhere.
    ===================================================================== */
 
-/* ---------- Design tokens : LIGHT theme (default) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+/* ---------- Design tokens : LIGHT theme (Premium Library) ---------- */
 :root {
-  /* Brand palette */
-  --brand: #7c4dff;
-  --brand-600: #6a3df0;
-  --brand-700: #5a31d6;
-  --accent: #ff7043;
-  --gold: #ffb300;
+  /* Brand palette mapped to old structure to preserve classes */
+  --brand: #6B4423; /* Leather Brown */
+  --brand-600: #4A2E1A; /* Dark Wood */
+  --brand-700: #331F10;
+  --accent: #B88A3B; /* Antique Gold */
+  --gold: #B88A3B;
 
   /* Surfaces & text */
-  --bg: #f7f6fb;
-  --surface: #ffffff;
-  --surface-2: #f0eef7;
-  --text: #1f1b2e;
-  --text-muted: #6b6680;
-  --border: #e4e0ee;
+  --bg: #F5EFE3; /* Old Paper */
+  --surface: #FCFAF5; /* Paper White */
+  --surface-2: #F8F4EC; /* Cream */
+  --text: #4A2E1A; /* Dark Wood */
+  --text-muted: rgba(74, 46, 26, 0.65); /* Warm muted */
+  --border: #DDD0BB;
 
   /* Feedback */
-  --success: #2e9e5b;
-  --danger: #e23b3b;
+  --success: #68714F;
+  --danger: #9E4E3F;
 
-  /* Effects */
-  --shadow-sm: 0 1px 3px rgba(31, 27, 46, .08);
-  --shadow-md: 0 6px 20px rgba(31, 27, 46, .10);
-  --shadow-lg: 0 18px 50px rgba(31, 27, 46, .16);
-  --glass: rgba(255, 255, 255, .65);
-  --glass-border: rgba(255, 255, 255, .5);
+  /* Shadows (Warm brown shadows) */
+  --shadow-sm: 0 2px 4px rgba(90, 55, 30, .06), 0 1px 2px rgba(90, 55, 30, .08);
+  --shadow-md: 0 6px 16px rgba(90, 55, 30, .10), 0 2px 4px rgba(90, 55, 30, .05);
+  --shadow-lg: 0 16px 40px rgba(90, 55, 30, .14), 0 4px 8px rgba(90, 55, 30, .08);
+  --glass: rgba(252, 250, 245, .85);
+  --glass-border: rgba(184, 138, 59, .15);
 
-  /* Shape & motion */
-  --radius-sm: 8px;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --radius-pill: 999px;
-  --transition: .25s cubic-bezier(.4, 0, .2, 1);
+  /* Shape & motion - Premium slow motion, small radii */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 6px; /* Pill buttons removed, changed to rounded rectangles for classic feel */
+  --transition: .4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Slow elegant transition */
 
   /* Layout */
-  --container: 1200px;
-  --nav-h: 70px;
+  --container: 1140px;
+  --nav-h: 80px;
 
   /* Typography */
-  --font: "Tajawal", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font: 'IBM Plex Sans Arabic', 'Cairo', system-ui, sans-serif;
+  --font-heading: 'Amiri', 'Playfair Display', serif;
+  --font-english: 'Playfair Display', serif;
+  
+  /* Texture */
+  --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* ---------- Design tokens : DARK theme ---------- */
+  /* ---------- Design tokens : DARK theme (Library at Night) ---------- */
 [data-theme="dark"] {
-  --brand: #9d7bff;
-  --brand-600: #8a64ff;
-  --brand-700: #7a52f5;
-  --accent: #ff8a65;
-  --gold: #ffca28;
+  --brand: #B88A3B; /* Antique Gold takes center stage */
+  --brand-600: #D4AF37; /* Brighter gold for headings */
+  --brand-700: #E6C259;
+  --accent: #B88A3B;
+  --gold: #D4AF37;
 
-  --bg: #14111f;
-  --surface: #1d1830;
-  --surface-2: #251f3b;
-  --text: #f1eefb;
-  --text-muted: #a7a0c0;
-  --border: #322b4a;
+  /* Surfaces & text: Deep warm blacks and dark woods */
+  --bg: #1A1412; /* Very deep warm black/brown */
+  --surface: #241A15; /* Dark Wood */
+  --surface-2: #2A1F19; /* Lighter dark wood */
+  --text: #F5EFE3; /* Old Paper */
+  --text-muted: rgba(245, 239, 227, 0.65);
+  --border: #4A2E1A;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .4);
-  --shadow-md: 0 6px 20px rgba(0, 0, 0, .45);
-  --shadow-lg: 0 18px 50px rgba(0, 0, 0, .55);
-  --glass: rgba(29, 24, 48, .6);
-  --glass-border: rgba(255, 255, 255, .08);
+  /* Feedback */
+  --success: #8E9B66;
+  --danger: #BD5B4B;
+
+  /* Shadows (Darker, richer shadows) */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, .4), 0 1px 2px rgba(0, 0, 0, .6);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, .5), 0 2px 4px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, .6), 0 4px 8px rgba(0, 0, 0, .5);
+  --glass: rgba(26, 20, 18, .85);
+  --glass-border: rgba(184, 138, 59, .2);
+
+  --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
 }
 
 /* ---------- Reset ---------- */
@@ -82,13 +93,29 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--paper-texture);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.8;
   min-height: 100vh;
   transition: background var(--transition), color var(--transition);
   overflow-x: hidden;
 }
+
+/* Corner ornaments */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  width: 150px; height: 150px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+body::before { top: 0; right: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M100 0C50 0 0 50 0 100' fill='none' stroke='%234A2E1A' stroke-width='1'/%3E%3C/svg%3E"); }
+body::after { bottom: 0; left: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 100C50 100 100 50 100 0' fill='none' stroke='%234A2E1A' stroke-width='1'/%3E%3C/svg%3E"); }
+
 
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -104,15 +131,14 @@ input, select, textarea { font-family: inherit; }
 }
 
 :focus-visible {
-  outline: 3px solid var(--brand);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
-/* Skip link — first focusable element on every page */
 .skip-link {
   position: absolute; inset-inline-start: 12px; top: -60px;
-  background: var(--brand); color: #fff; padding: 10px 18px;
+  background: var(--brand); color: var(--surface); padding: 10px 18px;
   border-radius: var(--radius-sm); z-index: 2000; transition: top var(--transition);
 }
 .skip-link:focus { top: 12px; }
@@ -122,99 +148,128 @@ input, select, textarea { font-family: inherit; }
 }
 
 /* ---------- Layout primitives ---------- */
-.container { width: min(100% - 2.5rem, var(--container)); margin-inline: auto; }
+.container { width: min(100% - 3rem, var(--container)); margin-inline: auto; position: relative; z-index: 1; }
 
-.section { padding: clamp(3rem, 6vw, 5.5rem) 0; }
+.section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
 
-.section-head { text-align: center; max-width: 640px; margin: 0 auto clamp(2rem, 4vw, 3rem); }
+.section-head { text-align: center; max-width: 700px; margin: 0 auto clamp(2.5rem, 5vw, 4rem); position: relative; }
 .section-head h2 {
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-  font-weight: 800; line-height: 1.25; margin-bottom: .6rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700; color: var(--brand-600);
+  line-height: 1.3; margin-bottom: 1rem;
 }
-.section-head p { color: var(--text-muted); font-size: 1.05rem; }
+.section-head p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; }
+/* Decorative separator for headings */
+.section-head::after {
+  content: '✦';
+  display: block;
+  font-size: 1.2rem;
+  color: var(--accent);
+  opacity: 0.5;
+  margin-top: 1.5rem;
+}
 
-.grid { display: grid; gap: 1.5rem; }
-.grid-books { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
-.grid-auto { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.grid { display: grid; gap: 2rem; }
+.grid-books { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2.5rem 1.5rem; }
+.grid-auto { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (Leather style) ---------- */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  padding: .75rem 1.5rem; border-radius: var(--radius-pill);
-  font-weight: 700; font-size: .95rem; line-height: 1;
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  padding: .85rem 1.8rem; border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 1rem; line-height: 1.2;
+  transition: all var(--transition);
   white-space: nowrap;
+  font-family: var(--font);
 }
-.btn:active { transform: translateY(1px) scale(.99); }
+.btn:active { transform: translateY(1px); }
 
-.btn-primary { background: linear-gradient(135deg, var(--brand), var(--brand-700)); color: #fff; box-shadow: 0 8px 24px rgba(124, 77, 255, .35); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(124, 77, 255, .45); }
+.btn-primary { 
+  background: var(--brand); 
+  color: var(--surface); 
+  border: 1px solid var(--brand-600);
+  box-shadow: 0 4px 12px rgba(90, 55, 30, .15); 
+}
+.btn-primary:hover { 
+  background: var(--brand-600); 
+  box-shadow: 0 6px 16px rgba(90, 55, 30, .25); 
+}
 
-.btn-ghost { background: var(--surface-2); color: var(--text); }
-.btn-ghost:hover { background: var(--border); }
+.btn-ghost { background: transparent; color: var(--brand-600); border: 1px solid transparent; }
+.btn-ghost:hover { background: rgba(184, 138, 59, 0.08); border-color: var(--border); }
 
-.btn-outline { border: 2px solid var(--brand); color: var(--brand); }
-.btn-outline:hover { background: var(--brand); color: #fff; }
+.btn-outline { border: 1px solid var(--brand); color: var(--brand); background: transparent; }
+.btn-outline:hover { background: var(--brand); color: var(--surface); }
 
 .btn-block { width: 100%; }
-.btn-lg { padding: .95rem 2rem; font-size: 1.05rem; }
+.btn-lg { padding: 1rem 2.5rem; font-size: 1.1rem; }
 
 /* ---------- Badges & chips ---------- */
 .badge {
   display: inline-flex; align-items: center; gap: .3rem;
-  padding: .25rem .7rem; border-radius: var(--radius-pill);
-  font-size: .72rem; font-weight: 700;
+  padding: .3rem .8rem; border-radius: var(--radius-sm);
+  font-size: .75rem; font-weight: 700; font-family: var(--font);
+  border: 1px solid var(--border);
 }
-.badge-new { background: var(--success); color: #fff; }
+.badge-new { background: rgba(104, 113, 79, 0.1); color: var(--success); border-color: rgba(104, 113, 79, 0.3); }
 .badge-cat { background: var(--surface-2); color: var(--brand); }
-.badge-off { background: var(--accent); color: #fff; }
+.badge-off { background: rgba(184, 138, 59, 0.1); color: var(--accent); border-color: var(--accent); }
 
 /* ---------- Rating stars ---------- */
-.stars { display: inline-flex; gap: 2px; color: var(--gold); font-size: .9rem; }
-.stars[aria-hidden] { letter-spacing: 1px; }
+.stars { display: inline-flex; gap: 3px; color: var(--gold); font-size: 1.1rem; font-family: var(--font-english); }
+.stars[aria-hidden] { letter-spacing: 2px; }
 
-/* ---------- Toast notifications (created by js/ui.js) ---------- */
+/* ---------- Toast notifications ---------- */
 .toast-stack {
   position: fixed; inset-block-end: 24px; inset-inline-end: 24px;
-  display: flex; flex-direction: column; gap: .6rem; z-index: 3000;
+  display: flex; flex-direction: column; gap: 1rem; z-index: 3000;
 }
 .toast {
-  background: var(--surface); color: var(--text);
-  border: 1px solid var(--border); border-inline-start: 4px solid var(--brand);
-  padding: .85rem 1.2rem; border-radius: var(--radius); box-shadow: var(--shadow-lg);
-  font-weight: 600; min-width: 240px;
+  background: var(--surface); background-image: var(--paper-texture);
+  color: var(--brand-600);
+  border: 1px solid var(--border); border-inline-start: 4px solid var(--accent);
+  padding: 1rem 1.5rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-lg);
+  font-weight: 600; min-width: 280px;
   animation: toast-in var(--transition);
 }
 .toast.success { border-inline-start-color: var(--success); }
 .toast.danger { border-inline-start-color: var(--danger); }
-@keyframes toast-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
 
 /* ---------- Loading skeleton & spinner ---------- */
 .skeleton {
-  background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
-  background-size: 200% 100%; animation: shimmer 1.3s infinite; border-radius: var(--radius);
+  background: linear-gradient(90deg, rgba(221, 208, 187, 0.3) 25%, rgba(221, 208, 187, 0.6) 50%, rgba(221, 208, 187, 0.3) 75%);
+  background-size: 200% 100%; animation: shimmer 2s infinite ease-in-out; border-radius: var(--radius-sm);
 }
 @keyframes shimmer { to { background-position: -200% 0; } }
 
 .spinner {
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 4px solid var(--surface-2); border-top-color: var(--brand);
-  animation: spin .8s linear infinite; margin: 2rem auto;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid rgba(184, 138, 59, 0.2); border-top-color: var(--accent);
+  animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; margin: 3rem auto;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- Empty / state blocks ---------- */
-.state-block { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
-.state-block .state-icon { font-size: 3rem; margin-bottom: .5rem; }
+.state-block { 
+  text-align: center; padding: 4rem 2rem; color: var(--text-muted);
+  background: var(--surface-2); border: 1px dashed var(--border); border-radius: var(--radius-lg);
+  font-family: var(--font-heading); font-size: 1.2rem;
+}
+.state-block .state-icon { font-size: 3.5rem; margin-bottom: 1rem; color: var(--accent); opacity: 0.5; }
 
 /* ---------- Page hero (inner pages) ---------- */
 .page-hero {
-  background: linear-gradient(135deg, var(--brand), var(--brand-700));
-  color: #fff; padding: clamp(2.5rem, 6vw, 4rem) 0; text-align: center;
+  background: var(--surface-2);
+  background-image: var(--paper-texture);
+  border-bottom: 1px solid var(--border);
+  color: var(--brand-600); padding: clamp(4rem, 8vw, 6rem) 0 3rem; text-align: center;
+  position: relative;
 }
-.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; }
-.page-hero p { opacity: .9; margin-top: .5rem; }
+.page-hero h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: .5rem; }
+.page-hero p { opacity: .8; font-size: 1.1rem; }
 
-/* ---------- Reveal-on-scroll animation (js/ui.js toggles .in) ---------- */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+/* ---------- Reveal-on-scroll animation ---------- */
+.reveal { opacity: 0; transform: translateY(15px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.in { opacity: 1; transform: none; }

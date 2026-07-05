@@ -91,3 +91,12 @@ $RECYCLE.BIN/
 .DS_Store
 .AppleDouble
 .LSOverride
+
+
+
+UI-UX Design/node_modules/
+UI-UX Design/dist/
+
+frontend-redesign/node_modules/
+
+*.log
