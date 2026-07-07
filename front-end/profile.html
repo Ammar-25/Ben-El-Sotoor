@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- profile.html — User dashboard: stats, reading progress, favorites, reviews, purchased. -->
+<html lang="ar" dir="rtl" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابي | بين السطور</title>
+  <meta name="description" content="ملفك الشخصي في بين السطور: إحصائياتك، تقدّم القراءة، مفضلتك، تقييماتك وكتبك المشتراة.">
+  <link rel="canonical" href="https://baynalsutoor.example/profile.html">
+  <meta name="robots" content="noindex">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="حسابي | بين السطور">
+  <meta property="og:description" content="ملفك الشخصي ومكتبتك.">
+  <meta property="og:image" content="assets/images/banners/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/pages/inner.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script defer src="js/services/auth-service.js"></script>
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <!-- Header -->
+        <div class="profile-header">
+          <img src="assets/images/ui/author-placeholder.png" alt="" width="100" height="100">
+          <div style="flex: 1;">
+            <h1>--</h1>
+            <p><span data-i18n="profile.memberSince">عضو منذ</span> --</p>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="orders.html" class="btn btn-primary" data-i18n="orders.title">الطلبات والمشتريات</a>
+            <button class="btn btn-outline" id="logout-btn" data-i18n="auth.logout">تسجيل الخروج</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:2rem">
+          <div class="stat-card">
+            <div class="stat-num"><div class="spinner" style="width:24px;height:24px;margin:auto;border-width:2px"></div></div>
+            <div class="stat-label" data-i18n="profile.booksRead">كتب مقروءة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num"><div class="spinner" style="width:24px;height:24px;margin:auto;border-width:2px"></div></div>
+            <div class="stat-label" data-i18n="profile.inProgress">قيد القراءة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-fav-mirror><div class="spinner" style="width:24px;height:24px;margin:auto;border-width:2px"></div></div>
+            <div class="stat-label" data-i18n="profile.favorites">المفضلة</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num"><div class="spinner" style="width:24px;height:24px;margin:auto;border-width:2px"></div></div>
+            <div class="stat-label" data-i18n="reviews.userReviews">آراء القراء</div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="profile-tabs" role="tablist">
+          <button class="profile-tab active" data-tab="progress" data-i18n="profile.readingProgress">تقدّم القراءة</button>
+          <button class="profile-tab" data-tab="read" data-i18n="profile.readBooks">الكتب المقروءة</button>
+          <button class="profile-tab" data-tab="favorites" data-i18n="profile.favorites">المفضلة</button>
+          <button class="profile-tab" data-tab="reviews" data-i18n="profile.myReviews">تقييماتي</button>
+        </div>
+
+        <!-- Panels -->
+        <div data-panel="progress">
+          <div class="spinner"></div>
+        </div>
+
+        <div data-panel="read" hidden>
+          <div id="profile-read">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+        <div data-panel="favorites" hidden>
+          <div id="profile-favorites" aria-live="polite">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+        <div data-panel="reviews" hidden>
+          <div id="profile-reviews">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+
+</html>

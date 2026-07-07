@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- latest.html — Newest releases with weekly/monthly/yearly filters. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أحدث الإصدارات | بين السطور</title>
+  <meta name="description" content="اطّلع على أحدث الكتب الصادرة في بين السطور وفلترها حسب الأسبوع أو الشهر أو العام.">
+  <link rel="canonical" href="https://baynalsutoor.example/latest.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="أحدث الإصدارات | بين السطور">
+  <meta property="og:description" content="كل ما هو جديد في عالم الكتب.">
+  <meta property="og:image" content="assets/images/banners/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="أحدث الإصدارات | بين السطور">
+  <meta name="twitter:description" content="كل ما هو جديد في عالم الكتب.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script defer src="js/services/auth-service.js"></script>
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/books.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <h1 data-i18n="sections.latest">أحدث الإصدارات</h1>
+        <p data-i18n="sections.latestSub">كل ما هو جديد في عالم الكتب</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="chips" id="latest-filters" role="group" aria-label="Time range" style="justify-content:center;margin-bottom:2rem">
+          <button class="chip" data-range="weekly" data-i18n="filters.weekly">هذا الأسبوع</button>
+          <button class="chip active" data-range="monthly" data-i18n="filters.monthly">هذا الشهر</button>
+          <button class="chip" data-range="yearly" data-i18n="filters.yearly">هذا العام</button>
+        </div>
+        <div class="grid grid-books" id="latest-grid" aria-live="polite"><div class="spinner"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

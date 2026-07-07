@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- book.html — Single book details page. Reads ?id= from URL. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل الكتاب | بين السطور</title>
+  <meta name="description" content="تفاصيل الكتاب، المراجعات، وتقدم القراءة.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/pages/book.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Scripts -->
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/auth-service.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/book.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div id="book-page-content"><div class="spinner"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

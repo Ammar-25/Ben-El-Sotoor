@@ -1,0 +1,289 @@
+{
+  "_comment": "English (LTR) UI strings. Keys MUST mirror ar.json. To EDIT visible text change the value here.",
+  "dir": "ltr",
+  "langName": "English",
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "latest": "Latest Releases",
+    "categories": "Categories",
+    "authors": "Authors",
+    "quiz": "Discover Your Book",
+    "subscriptions": "Subscriptions",
+    "search": "Search",
+    "cart": "Cart",
+    "profile": "Profile",
+    "login": "Login",
+    "reviews": "Reviews"
+  },
+  "common": {
+    "brand": "Bayn Al-Sutoor",
+    "tagline": "Where every story begins",
+    "addToCart": "Add to Cart",
+    "quickView": "Quick View",
+    "viewAll": "View All",
+    "viewProfile": "View Profile",
+    "readSample": "Show Whole Book",
+    "readMore": "Read More",
+    "currency": "EGP",
+    "by": "by",
+    "reviews": "reviews",
+    "books": "books",
+    "followers": "followers",
+    "new": "New",
+    "off": "OFF",
+    "loading": "Loading...",
+    "search": "Search for a book or author...",
+    "filterBy": "Filter by",
+    "sortBy": "Sort by",
+    "all": "All",
+    "results": "results",
+    "noResults": "No results found",
+    "page": "Page",
+    "prev": "Previous",
+    "next": "Next",
+    "close": "Close",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "skipToContent": "Skip to content",
+    "favorite": "Favorite",
+    "added": "Added"
+  },
+  "sort": {
+    "newest": "Newest",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "rating": "Top Rated"
+  },
+  "categories": {
+    "science": "Science",
+    "novels": "Novels",
+    "self-development": "Self-Development",
+    "history": "History",
+    "poetry": "Poetry",
+    "business": "Business",
+    "children": "Children"
+  },
+  "hero": {
+    "title": "Discover your world between the lines",
+    "subtitle": "Thousands of books await — read, learn, and set off on an endless journey.",
+    "cta": "Browse Library",
+    "ctaSecondary": "Find your perfect book"
+  },
+  "sections": {
+    "featured": "Featured Books",
+    "featuredSub": "Top picks recommended by our readers",
+    "stats": "Numbers that speak for us",
+    "categories": "Browse by Category",
+    "categoriesSub": "Find what suits your taste",
+    "quizCta": "Not sure what to read?",
+    "quizCtaSub": "Answer a few simple questions and let us suggest your perfect book",
+    "subsCta": "Read without limits",
+    "subsCtaSub": "Subscribe now for full access to our library",
+    "testimonials": "What our readers say",
+    "newsletter": "Subscribe to our newsletter",
+    "newsletterSub": "Latest releases and offers straight to your inbox",
+    "latest": "Latest Releases",
+    "latestSub": "Everything new in the world of books",
+    "authors": "Our Authors",
+    "authorsSub": "Meet the minds behind the words"
+  },
+  "stats": {
+    "books": "Books",
+    "authors": "Authors",
+    "readers": "Readers",
+    "reviews": "Reviews"
+  },
+  "newsletter": {
+    "placeholder": "Your email address",
+    "button": "Subscribe",
+    "success": "You're subscribed!"
+  },
+  "filters": {
+    "weekly": "This Week",
+    "monthly": "This Month",
+    "yearly": "This Year",
+    "category": "Category",
+    "language": "Language",
+    "price": "Price",
+    "priceRange": "Price range"
+  },
+  "modal": {
+    "publisher": "Publisher",
+    "language": "Language",
+    "pages": "Pages",
+    "year": "Year",
+    "rating": "Rating",
+    "category": "Category",
+    "reviewsPreview": "Reader reviews"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptyCta": "Start shopping",
+    "item": "Item",
+    "price": "Price",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "tax": "Tax (14%)",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "summary": "Order Summary",
+    "orderPlaced": "Your order was placed successfully!",
+    "paymentDetails": "Payment Details",
+    "nameOnCard": "Name on Card",
+    "cardNumber": "Card Number",
+    "expiry": "Expiry (MM/YY)",
+    "cvv": "CVV",
+    "payNow": "Pay Now"
+  },
+  "quiz": {
+    "title": "Find your perfect book",
+    "subtitle": "Answer the following questions",
+    "start": "Start the quiz",
+    "next": "Next",
+    "prev": "Previous",
+    "result": "Your result",
+    "restart": "Retake the quiz",
+    "recommended": "Books we recommend for you",
+    "questions": [
+      {
+        "q": "What are you looking for in reading?",
+        "a": ["Knowledge and science", "Thrill and fun", "Self-development", "Beauty and language"]
+      },
+      {
+        "q": "How much time do you give to reading?",
+        "a": ["A short time daily", "Hours on weekends", "Whenever I can", "I read constantly"]
+      },
+      {
+        "q": "Which atmosphere do you prefer?",
+        "a": ["Future and technology", "Past and history", "Present and reality", "Imagination and poetry"]
+      },
+      {
+        "q": "How do you want to feel after reading?",
+        "a": ["To learn something new", "To live an adventure", "To change for the better", "To feel at peace"]
+      }
+    ],
+    "personalities": {
+      "science": "The Curious Mind",
+      "novels": "The Adventurous Spirit",
+      "self-development": "The Seeker of Growth",
+      "poetry": "The Poetic Heart"
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "name": "Full name",
+    "loginBtn": "Sign in",
+    "registerBtn": "Create account",
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "forgot": "Forgot your password?",
+    "or": "or",
+    "remember": "Remember me",
+    "loginSuccess": "Successfully signed in ✓",
+    "registerSuccess": "Account successfully created ✓",
+    "validationError": "Please fill in all fields",
+    "passwordMismatch": "Passwords do not match",
+    "logout": "Sign out"
+  },
+  "profile": {
+    "title": "My Profile",
+    "memberSince": "Member since",
+    "stats": "My Stats",
+    "readingProgress": "Reading Progress",
+    "favorites": "Favorites",
+    "myReviews": "My Reviews",
+    "purchased": "Purchased Books",
+    "booksRead": "Books read",
+    "inProgress": "In progress",
+    "noFavorites": "Your favorites list is empty. Start exploring and save the books you love!",
+    "noPurchases": "You haven't purchased any books yet. Time to treat yourself to a good read!",
+    "noReviews": "Looks like you haven't reviewed any books yet. Share your thoughts with the community!",
+    "noProgress": "You aren't reading any books right now. Start exploring!",
+    "readBooks": "Read Books",
+    "noReadBooks": "You haven't finished any books yet. Keep reading!"
+  },
+  "reviews": {
+    "title": "Reviews & Ratings",
+    "overall": "Overall rating",
+    "breakdown": "Rating breakdown",
+    "userReviews": "Reader reviews",
+    "writeReview": "Write a review",
+    "yourRating": "Your rating",
+    "yourReview": "Your review",
+    "submit": "Submit review",
+    "thanks": "Thanks for your review!"
+  },
+  "subscriptions": {
+    "title": "Choose your plan",
+    "subtitle": "Flexible plans for every reader",
+    "subscribe": "Subscribe now",
+    "comparison": "Plan comparison",
+    "feature": "Feature",
+    "faq": "Frequently asked questions",
+    "mostPopular": "Most popular"
+  },
+  "plansFeatures": {
+    "payPerBook": "Pay per book",
+    "lifetimeAccess": "Lifetime access to the book",
+    "noCommitment": "No monthly commitment",
+    "unlimitedReading": "Unlimited reading",
+    "newReleases": "Latest releases",
+    "cancelAnytime": "Cancel anytime",
+    "oneDevice": "One device",
+    "twoMonthsFree": "Two months free",
+    "threeDevices": "Up to 3 devices",
+    "offlineReading": "Offline reading",
+    "everythingAnnual": "Everything in Annual",
+    "audioBooks": "Audiobooks",
+    "exclusiveContent": "Exclusive content",
+    "fiveDevices": "Up to 5 devices",
+    "prioritySupport": "Priority support"
+  },
+  "faq": {
+    "q1": "Can I cancel my subscription anytime?",
+    "a1": "Yes, you can cancel anytime with no extra fees.",
+    "q2": "Are audiobooks available?",
+    "a2": "Audiobooks are available in the Premium plan only.",
+    "q3": "Can I read offline?",
+    "a3": "Yes, offline reading is available in the Annual and Premium plans.",
+    "q4": "How many devices are allowed?",
+    "a4": "It depends on your plan, from one device up to five."
+  },
+  "footer": {
+    "about": "About",
+    "aboutText": "Bayn Al-Sutoor is your first destination for Arabic and international books. We believe every reader has a book waiting.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "contact": "Contact us",
+    "faq": "FAQ",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "followUs": "Follow us",
+    "rights": "All rights reserved © 2026 Bayn Al-Sutoor"
+  },
+  "orders": {
+    "title": "Orders & Purchases",
+    "pending": "Pending",
+    "processing": "Processing",
+    "onTheWay": "On the Way",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "emptyTitle": "No Orders Yet",
+    "emptyDesc": "Looks like you haven't placed any orders yet. Discover our collection and find your next favorite book!",
+    "shopNow": "Browse Library"
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundCode": "404",
+    "notFoundText": "Looks like the page you're looking for got lost between the lines.",
+    "backHome": "Back to home",
+    "searchShortcut": "Search for a book"
+  }
+}

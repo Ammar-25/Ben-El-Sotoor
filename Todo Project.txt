@@ -1,0 +1,9 @@
+TODO:
+
+1- Admin pages
+
+2- Payment-gate front
+
+3- Remove subs
+
+4-  

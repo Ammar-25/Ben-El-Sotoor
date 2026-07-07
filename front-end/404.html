@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- 404.html — Friendly not-found page matching the site theme. -->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الصفحة غير موجودة | بين السطور</title>
+  <meta name="description" content="عذرًا، الصفحة التي تبحث عنها غير موجودة. عُد إلى الرئيسية أو ابحث عن كتابك.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://baynalsutoor.example/404.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script defer src="js/services/data-client.js"></script>
+  <script defer src="js/services/book-service.js"></script>
+  <script defer src="js/services/author-service.js"></script>
+  <script defer src="js/services/review-service.js"></script>
+  <script defer src="js/services/subscription-service.js"></script>
+  <script defer src="js/language.js"></script>
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/cart.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skipToContent">تخطٍّ إلى المحتوى</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="section" style="min-height:60vh;display:grid;place-items:center;text-align:center">
+      <div class="container">
+        <div style="font-size:clamp(5rem,18vw,9rem);font-weight:800;line-height:1;color:var(--brand)" data-i18n="errors.notFoundCode">٤٠٤</div>
+        <h1 style="margin:.5rem 0" data-i18n="errors.notFoundTitle">الصفحة غير موجودة</h1>
+        <p style="color:var(--text-muted);max-width:42ch;margin:0 auto 1.8rem" data-i18n="errors.notFoundText">يبدو أن الصفحة التي تبحث عنها قد ضاعت بين السطور.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <a class="btn btn-primary btn-lg" href="index.html" data-i18n="errors.backHome">العودة للرئيسية</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

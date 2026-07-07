@@ -1,0 +1,111 @@
+/* =====================================================================
+   navbar.css — Shared top navigation + mobile drawer + switchers
+   Logo, primary links, search/cart/profile actions, language & theme
+   toggles. Works in both RTL and LTR via logical properties.
+   ===================================================================== */
+
+.navbar {
+  position: sticky; top: 0; z-index: 1000;
+  height: var(--nav-h);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.navbar .container { height: 100%; display: flex; align-items: center; gap: 1rem; }
+
+/* Logo */
+.nav-logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.15rem; }
+.nav-logo img { width: 38px; height: 38px; border-radius: 10px; }
+.nav-logo span { color: var(--brand); }
+
+/* Primary links */
+.nav-links { display: flex; align-items: center; gap: .35rem; margin-inline: auto; }
+.nav-links a {
+  padding: .5rem .8rem; border-radius: var(--radius-pill);
+  font-weight: 600; font-size: .92rem; color: var(--text-muted);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-links a:hover { color: var(--text); background: var(--surface-2); }
+.nav-links a.active { color: var(--brand); background: var(--surface-2); }
+
+/* Right actions */
+.nav-actions { display: flex; align-items: center; gap: .35rem; }
+.icon-btn {
+  position: relative;
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--text); transition: background var(--transition), color var(--transition);
+}
+.icon-btn:hover { background: var(--surface-2); color: var(--brand); }
+.icon-btn svg { width: 22px; height: 22px; }
+
+/* Cart / favorites counter bubble */
+.count-bubble {
+  position: absolute; top: 4px; inset-inline-end: 4px;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  background: var(--accent); color: #fff; font-size: .68rem; font-weight: 700;
+  border-radius: var(--radius-pill); display: grid; place-items: center;
+}
+.count-bubble:empty, .count-bubble[data-count="0"] { display: none; }
+
+/* Language switcher (segmented pill — premium SaaS look) */
+.lang-switch {
+  display: inline-flex; background: var(--surface-2);
+  border-radius: var(--radius-pill); padding: 3px; gap: 2px;
+}
+.lang-switch button {
+  padding: .35rem .7rem; border-radius: var(--radius-pill);
+  font-size: .8rem; font-weight: 700; color: var(--text-muted);
+  transition: background var(--transition), color var(--transition);
+}
+.lang-switch button[aria-pressed="true"] { background: var(--brand); color: #fff; }
+
+/* Theme toggle (animated track + knob) */
+.theme-toggle {
+  position: relative; width: 56px; height: 30px;
+  background: var(--surface-2); border-radius: var(--radius-pill);
+  transition: background var(--transition);
+}
+.theme-toggle .knob {
+  position: absolute; top: 3px; inset-inline-start: 3px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--brand); display: grid; place-items: center;
+  color: #fff; font-size: .8rem;
+  transition: transform var(--transition), background var(--transition);
+}
+[data-theme="dark"] .theme-toggle .knob { transform: translateX(26px); }
+[dir="rtl"][data-theme="dark"] .theme-toggle .knob { transform: translateX(-26px); }
+
+/* Mobile hamburger */
+.nav-toggle { display: none; }
+
+/* Mobile drawer */
+.nav-drawer {
+  position: fixed; inset: 0; z-index: 1100;
+  background: rgba(0, 0, 0, .5); opacity: 0; visibility: hidden;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+.nav-drawer.open { opacity: 1; visibility: visible; }
+.nav-drawer-panel {
+  position: absolute; inset-block: 0; inset-inline-end: 0;
+  width: min(82vw, 320px); background: var(--surface);
+  padding: 1.5rem; display: flex; flex-direction: column; gap: .4rem;
+  transform: translateX(100%); transition: transform var(--transition);
+  overflow-y: auto;
+}
+[dir="rtl"] .nav-drawer-panel { transform: translateX(-100%); }
+.nav-drawer.open .nav-drawer-panel { transform: none; }
+.nav-drawer-panel a {
+  padding: .8rem 1rem; border-radius: var(--radius);
+  font-weight: 600; color: var(--text);
+}
+.nav-drawer-panel a:hover, .nav-drawer-panel a.active { background: var(--surface-2); color: var(--brand); }
+.nav-drawer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+
+/* ---------- Responsive switch ---------- */
+@media (max-width: 920px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: grid; }
+  .nav-actions .desktop-only { display: none; }
+}
