@@ -27,5 +27,26 @@ namespace BaynAlSutoor.API.Controllers
             var count = await _dashboardService.GetTotalReviewsAsync();
             return Ok(count);
         }
+
+        [HttpGet("orders/count")]
+        public async Task<IActionResult> GetOrdersCount()
+        {
+            var count = await _dashboardService.GetTotalOrdersAsync();
+            return Ok(count);
+        }
+
+        [HttpGet("books/count")]
+        public async Task<IActionResult> GetBooksCount()
+        {
+            var count = await _dashboardService.GetTotalBooksAsync();
+            return Ok(count);
+        }
+
+        [HttpGet("revenue/total")]
+        public async Task<IActionResult> GetTotalRevenue()
+        {
+            var total = await _dashboardService.GetTotalRevenueAsync();
+            return Ok(total);
+        }
     }
 }

@@ -30,6 +30,22 @@ namespace BaynAlSutoor.Application.Services
             return (await _unitOfWork.Reviews.GetAllAsync()).Count();
         }
 
+        public async Task<int> GetTotalOrdersAsync()
+        {
+            return (await _unitOfWork.Orders.GetAllAsync()).Count();
+        }
+
+        public async Task<int> GetTotalBooksAsync()
+        {
+            return (await _unitOfWork.Books.GetAllAsync()).Count();
+        }
+
+        public async Task<decimal> GetTotalRevenueAsync()
+        {
+            var orders = await _unitOfWork.Orders.GetAllAsync();
+            return orders.Where(o => (int)o.Status != 4).Sum(o => o.Total);
+        }
+
         public async Task<AdminStatsDto> GetStatsAsync()
         {
             var totalBooks = (await _unitOfWork.Books.GetAllAsync()).Count();
@@ -102,6 +118,48 @@ namespace BaynAlSutoor.Application.Services
             }
 
             return dtoList;
+        }
+
+        public async Task<PaginatedUserDto> GetPaginatedUsersAsync(int page = 1, int limit = 10)
+        {
+            var allUsers = await _unitOfWork.Users.GetAllAsync();
+            var totalCount = allUsers.Count();
+
+            var paginatedUsers = allUsers
+                .OrderByDescending(u => u.CreatedAt)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+
+            var userRoles = await _unitOfWork.UserRoles.GetAllAsync();
+            var roles = await _unitOfWork.Roles.GetAllAsync();
+
+            var userDtos = new List<UserAdminDto>();
+            foreach (var user in paginatedUsers)
+            {
+                var userRolesIds = userRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId);
+                var userRoleNames = roles.Where(r => userRolesIds.Contains(r.Id)).Select(r => r.Name).ToList();
+
+                userDtos.Add(new UserAdminDto
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    CreatedAt = user.CreatedAt,
+                    Roles = userRoleNames
+                });
+            }
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)limit);
+
+            return new PaginatedUserDto
+            {
+                TotalCount = totalCount,
+                Page = page,
+                Limit = limit,
+                TotalPages = totalPages,
+                Users = userDtos
+            };
         }
     }
 }
