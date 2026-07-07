@@ -285,5 +285,27 @@
     "notFoundText": "Looks like the page you're looking for got lost between the lines.",
     "backHome": "Back to home",
     "searchShortcut": "Search for a book"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "overview": "Overview",
+    "manageBooks": "Manage Books",
+    "manageOrders": "Manage Orders",
+    "manageUsers": "Manage Users",
+    "totalUsers": "Total Users",
+    "totalOrders": "Total Orders",
+    "totalRevenue": "Total Revenue",
+    "recentOrders": "Recent Orders",
+    "addBook": "Add Book",
+    "edit": "Edit",
+    "delete": "Delete",
+    "status": "Status",
+    "actions": "Actions",
+    "userRole": "Role",
+    "bookTitle": "Book Title",
+    "author": "Author",
+    "price": "Price",
+    "customer": "Customer",
+    "date": "Date"
   }
 }

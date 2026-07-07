@@ -73,6 +73,16 @@ const AuthService = (() => {
     return isTokenExpired(token);
   }
 
+  function isAdmin() {
+    const user = getUser();
+    if (!user) return false;
+    const roles = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || user.role || user.roles || [];
+    if (Array.isArray(roles)) {
+      return roles.includes("Admin");
+    }
+    return roles === "Admin";
+  }
+
   /* ---------- API Services ---------- */
 
   /**
@@ -255,18 +265,23 @@ const AuthService = (() => {
     return response;
   }
 
-  /* ---------- Local simulation fallbacks (for front-end only demo) ---------- */
   function simulateLogin(email, password) {
     return new Promise((resolve) => {
       setTimeout(() => {
         if (email && password.length >= 6) {
           // Generate a mock JWT that expires in 15 minutes (900 seconds)
           const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+          
+          // Determine role based on email for testing
+          const roles = email.toLowerCase().includes("admin") ? ["Admin"] : ["Reader"];
+          
           const payload = btoa(
             JSON.stringify({
               sub: "1234567890",
               name: "محمد علي",
               email: email,
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": roles,
+              role: roles,
               exp: Math.floor(Date.now() / 1000) + 900,
             }),
           );
@@ -352,6 +367,7 @@ const AuthService = (() => {
     getRefreshToken,
     isAuthenticated,
     getUser,
+    isAdmin,
     shouldRefresh,
     fetchAuthenticated,
   };

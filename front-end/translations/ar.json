@@ -285,5 +285,27 @@
     "notFoundText": "يبدو أن الصفحة التي تبحث عنها قد ضاعت بين السطور.",
     "backHome": "العودة للرئيسية",
     "searchShortcut": "ابحث عن كتاب"
+  },
+  "admin": {
+    "title": "لوحة تحكم الإدارة",
+    "overview": "نظرة عامة",
+    "manageBooks": "إدارة الكتب",
+    "manageOrders": "إدارة الطلبات",
+    "manageUsers": "إدارة المستخدمين",
+    "totalUsers": "إجمالي المستخدمين",
+    "totalOrders": "إجمالي الطلبات",
+    "totalRevenue": "إجمالي الإيرادات",
+    "recentOrders": "الطلبات الأخيرة",
+    "addBook": "إضافة كتاب",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "userRole": "الدور",
+    "bookTitle": "عنوان الكتاب",
+    "author": "المؤلف",
+    "price": "السعر",
+    "customer": "العميل",
+    "date": "التاريخ"
   }
 }

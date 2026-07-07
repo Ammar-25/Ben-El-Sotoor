@@ -35,6 +35,7 @@
 
   const isAuthPage =
     currentPage === "login.html" || currentPage === "register.html";
+  const isAdminPage = currentPage === "admin.html";
 
   // Check and run token refresh if needed
   if (window.AuthService && AuthService.shouldRefresh()) {
@@ -49,16 +50,33 @@
     ? AuthService.isAuthenticated()
     : !!localStorage.getItem("auth_token");
 
-  // Authorization Guard: All non-auth pages require a valid token
+  // 1. Unauthenticated users trying to access secure pages
   if (!isAuthPage && !hasToken) {
     location.href = "login.html";
     return;
   }
 
-  // Already authenticated guard: Redirect logged-in users away from auth pages
-  if (isAuthPage && hasToken) {
-    location.href = "index.html";
-    return;
+  // 2. Role-based routing for authenticated users
+  if (hasToken && window.AuthService) {
+    const isAdmin = AuthService.isAdmin();
+
+    if (isAuthPage) {
+      // Redirect away from auth pages if already logged in
+      location.href = isAdmin ? "admin.html" : "index.html";
+      return;
+    }
+
+    if (isAdmin && !isAdminPage) {
+      // Admins are restricted to admin pages only
+      location.href = "admin.html";
+      return;
+    }
+
+    if (!isAdmin && isAdminPage) {
+      // Regular users cannot access admin pages
+      location.href = "index.html";
+      return;
+    }
   }
 
   await I18N.ready; // translations loaded + document dir/lang set
@@ -488,7 +506,13 @@ function initAuth() {
 
         if (res.ok) {
           UI.toast(I18N.t("auth.loginSuccess"), "success");
-          setTimeout(() => (location.href = "index.html"), 1000);
+          setTimeout(() => {
+            if (AuthService.isAdmin()) {
+              location.href = "admin.html";
+            } else {
+              location.href = "index.html";
+            }
+          }, 1000);
         } else {
           UI.toast(res.message, "error");
           submitBtn.disabled = false;
