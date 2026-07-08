@@ -71,4 +71,18 @@ namespace BaynAlSutoor.Application.DTOs
     {
         public string Url { get; set; } = string.Empty;
     }
+
+    public class AdminBookDto : BookDto
+    {
+        public LocalizedStringDto AuthorName { get; set; } = new();
+    }
+
+    public class PaginatedBookDto
+    {
+        public int TotalCount { get; set; }
+        public int Page { get; set; }
+        public int Limit { get; set; }
+        public int TotalPages { get; set; }
+        public List<AdminBookDto> Books { get; set; } = new();
+    }
 }

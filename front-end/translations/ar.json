@@ -40,14 +40,18 @@
     "results": "نتيجة",
     "noResults": "لا توجد نتائج",
     "page": "صفحة",
+    "pageOf": "صفحة {0} من {1}",
     "prev": "السابق",
     "next": "التالي",
     "close": "إغلاق",
+    "cancel": "إلغاء",
     "lightMode": "الوضع الفاتح",
     "darkMode": "الوضع الداكن",
     "skipToContent": "تخطٍّ إلى المحتوى",
     "favorite": "المفضلة",
-    "added": "تمت الإضافة"
+    "added": "تمت الإضافة",
+    "save": "حفظ",
+    "add": "إضافة"
   },
   "sort": {
     "newest": "الأحدث",
@@ -297,6 +301,7 @@
     "totalRevenue": "إجمالي الإيرادات",
     "recentOrders": "الطلبات الأخيرة",
     "addBook": "إضافة كتاب",
+    "view": "عرض",
     "edit": "تعديل",
     "delete": "حذف",
     "status": "الحالة",
@@ -306,6 +311,16 @@
     "author": "المؤلف",
     "price": "السعر",
     "customer": "العميل",
-    "date": "التاريخ"
+    "date": "التاريخ",
+    "deleteBookConfirm": "هل أنت متأكد من حذف هذا الكتاب؟",
+    "bookDeleted": "تم حذف الكتاب بنجاح",
+    "editBook": "تعديل كتاب",
+    "bookTitleAr": "العنوان (عربي)",
+    "bookTitleEn": "العنوان (إنجليزي)",
+    "authorNameAr": "اسم المؤلف (عربي)",
+    "authorNameEn": "اسم المؤلف (إنجليزي)",
+    "coverImage": "صورة الغلاف",
+    "bookUpdated": "تم تحديث الكتاب بنجاح",
+    "bookAdded": "تمت إضافة الكتاب بنجاح"
   }
 }

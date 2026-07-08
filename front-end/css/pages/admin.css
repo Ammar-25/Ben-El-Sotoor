@@ -2,6 +2,11 @@
    admin.css — Styles specific to the Admin Dashboard.
    ===================================================================== */
 
+:root {
+  --primary: var(--brand);
+  --primary-fg: #fff;
+}
+
 .admin-layout {
   display: grid;
   grid-template-columns: 250px 1fr;
@@ -55,6 +60,7 @@
   text-align: right;
   cursor: pointer;
   width: 100%;
+  position: relative;
 }
 [dir="ltr"] .admin-nav-item {
   text-align: left;
@@ -66,8 +72,21 @@
 }
 
 .admin-nav-item.active {
+  background-color: transparent;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.admin-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  inset-inline-start: 0;
+  width: 4px;
+  height: 60%;
   background-color: var(--primary);
-  color: var(--primary-fg);
+  border-radius: 4px;
 }
 
 /* Admin Panels */
@@ -202,6 +221,92 @@
   color: #dc2626;
 }
 
+/* Specific Order Statuses */
+.status-badge.status-pending {
+  background-color: rgba(245, 158, 11, 0.1); /* Amber */
+  color: #d97706;
+}
+
+.status-badge.status-processing {
+  background-color: rgba(59, 130, 246, 0.1); /* Blue */
+  color: #2563eb;
+}
+
+.status-badge.status-ontheway,
+.status-badge.status-shipped {
+  background-color: rgba(139, 92, 246, 0.1); /* Purple */
+  color: #7c3aed;
+}
+
+.status-badge.status-delivered {
+  background-color: rgba(34, 197, 94, 0.1); /* Green */
+  color: #16a34a;
+}
+
+.status-badge.status-cancelled {
+  background-color: rgba(239, 68, 68, 0.1); /* Red */
+  color: #dc2626;
+}
+
+/* Premium Search Bar */
+.admin-header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 320px;
+  width: 100%;
+}
+
+.admin-search-icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  inset-inline-start: 1rem;
+  pointer-events: none;
+  transition: color var(--transition);
+}
+
+.admin-search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem; /* Space for icon */
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+[dir="rtl"] .admin-search-input {
+  padding: 0.75rem 2.75rem 0.75rem 1rem;
+}
+
+.admin-search-input:hover {
+  border-color: var(--brand);
+}
+
+.admin-search-input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(124, 77, 255, 0.15); /* Soft brand glow */
+  background-color: var(--surface);
+}
+
+.admin-search-input:focus + .admin-search-icon,
+.admin-search-wrapper:focus-within .admin-search-icon {
+  color: var(--brand);
+}
+
 /* Actions Cell */
 .actions-cell {
   display: flex;
@@ -232,4 +337,154 @@
   color: #dc2626;
   border-color: #dc2626;
   background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background-color: var(--surface-alt);
+}
+
+.pagination-controls .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.pagination-controls span {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Custom Action View Button */
+.btn-action-view {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-full, 999px);
+  padding: 0.35rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.btn-action-view:hover {
+  background-color: var(--primary);
+  color: var(--primary-fg, #fff);
+  box-shadow: var(--shadow-md, 0 4px 10px rgba(0, 0, 0, 0.15));
+  transform: translateY(-2px);
+}
+
+.btn-action-view:active {
+  transform: translateY(0);
+}
+
+/* Status Select Dropdown */
+.status-select {
+  appearance: none;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full, 999px);
+  padding: 0.35rem 1rem 0.35rem 2.2rem; /* RTL padding: right 1rem, left 2.2rem */
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-base);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%231f1b2e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.75rem center;
+  background-size: 1rem;
+  font-family: inherit;
+}
+
+[data-theme="dark"] .status-select {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23f1eefb' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+[dir="ltr"] .status-select {
+  padding: 0.35rem 2.2rem 0.35rem 1rem;
+  background-position: right 0.75rem center;
+}
+
+.status-select:hover:not(:disabled) {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.status-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--surface-hover);
+}
+
+.status-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--surface-alt);
+}
+
+/* Admin Modal Form Styles */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+}
+@media (max-width: 600px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  transition: all var(--transition);
+}
+
+.form-control:hover {
+  border-color: var(--brand);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.15);
+  background-color: var(--surface);
+}
+
+input[type="file"].form-control {
+  padding: 0.65rem 1rem;
+  background-color: var(--surface-2);
+  border: 2px dashed var(--border);
+  cursor: pointer;
+}
+input[type="file"].form-control:hover {
+  border-color: var(--brand);
+  background-color: var(--surface);
 }

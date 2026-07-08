@@ -24,6 +24,9 @@ namespace BaynAlSutoor.Application.Mappings
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author))
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
 
+            CreateMap<Book, AdminBookDto>()
+                .IncludeBase<Book, BookDto>();
+
             CreateMap<CreateBookDto, Book>()
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => System.DateTime.UtcNow));

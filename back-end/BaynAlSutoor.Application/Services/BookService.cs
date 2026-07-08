@@ -129,6 +129,12 @@ namespace BaynAlSutoor.Application.Services
             var book = await _unitOfWork.Books.GetByIdAsync(id);
             if (book == null) return false;
 
+            var reviews = await _unitOfWork.Reviews.FindAsync(r => r.BookId == id);
+            if (reviews != null && reviews.Any())
+            {
+                _unitOfWork.Reviews.DeleteRange(reviews);
+            }
+
             _unitOfWork.Books.Delete(book);
             await _unitOfWork.CompleteAsync();
             return true;

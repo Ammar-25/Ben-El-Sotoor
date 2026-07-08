@@ -38,4 +38,9 @@ namespace BaynAlSutoor.Application.DTOs
         public DateTime Timestamp { get; set; }
         public string? Details { get; set; }
     }
+
+    public class UpdateOrderStatusDto
+    {
+        public string Status { get; set; } = string.Empty;
+    }
 }

@@ -64,5 +64,48 @@ namespace BaynAlSutoor.API.Controllers
             var users = await _dashboardService.GetPaginatedUsersAsync(page, limit);
             return Ok(users);
         }
+
+        [HttpGet("books")]
+        public async Task<IActionResult> GetBooks([FromQuery] int page = 1, [FromQuery] int limit = 10, [FromQuery] string? search = null)
+        {
+            var books = await _dashboardService.GetPaginatedBooksAsync(page, limit, search);
+            return Ok(books);
+        }
+
+        [HttpGet("orders")]
+        public async Task<IActionResult> GetOrders([FromQuery] int page = 1, [FromQuery] int limit = 10)
+        {
+            var orders = await _dashboardService.GetPaginatedOrdersAsync(page, limit);
+            return Ok(orders);
+        }
+
+        [HttpGet("recent-orders")]
+        public async Task<IActionResult> GetRecentOrders([FromQuery] int limit = 5)
+        {
+            var orders = await _dashboardService.GetRecentOrdersAsync(limit);
+            return Ok(orders);
+        }
+
+        [HttpGet("orders/{id}")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            var order = await _dashboardService.GetOrderDetailsAsync(id);
+            if (order == null)
+            {
+                return NotFound(new { message = "Order not found." });
+            }
+            return Ok(order);
+        }
+
+        [HttpPut("orders/{id}/status")]
+        public async Task<IActionResult> UpdateOrderStatus(int id, [FromBody] BaynAlSutoor.Application.DTOs.UpdateOrderStatusDto dto)
+        {
+            var success = await _dashboardService.UpdateOrderStatusAsync(id, dto.Status);
+            if (!success)
+            {
+                return BadRequest(new { message = "Failed to update order status." });
+            }
+            return Ok(new { message = "Order status updated successfully." });
+        }
     }
 }

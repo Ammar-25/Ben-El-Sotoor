@@ -157,6 +157,21 @@ input, select, textarea { font-family: inherit; }
 .btn-outline:hover, .btn-outline.active { background: var(--brand); color: #fff; }
 .btn-outline.active svg { fill: currentColor; }
 
+.btn-danger {
+  border: 2px solid rgba(226, 59, 59, 0.2);
+  color: var(--danger);
+  background: rgba(226, 59, 59, 0.05);
+}
+.btn-danger:hover {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+  box-shadow: 0 8px 24px rgba(226, 59, 59, 0.35);
+}
+.btn-danger:hover svg {
+  stroke: #fff;
+}
+
 .btn-block { width: 100%; }
 .btn-lg { padding: .95rem 2rem; font-size: 1.05rem; }
 
