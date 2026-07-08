@@ -33,8 +33,7 @@ const UI = (() => {
     { href: 'library.html', key: 'nav.library' },
     { href: 'latest.html', key: 'nav.latest' },
     { href: 'categories.html', key: 'nav.categories' },
-    { href: 'authors.html', key: 'nav.authors' },
-    { href: 'quiz.html', key: 'nav.quiz' }
+    { href: 'authors.html', key: 'nav.authors' }
   ];
 
   const current = () => (location.pathname.split('/').pop() || 'index.html');
@@ -141,7 +140,7 @@ const UI = (() => {
           </div>
           <div class="footer-col">
             <h3 data-i18n="footer.followUs">${I18N.t('footer.followUs')}</h3>
-            <ul>${link('quiz.html', 'nav.quiz')}${link('reviews.html', 'nav.reviews')}</ul>
+            <ul>${link('reviews.html', 'nav.reviews')}</ul>
           </div>
         </div>
         <div class="footer-bottom"><span data-i18n="footer.rights">${I18N.t('footer.rights')}</span></div>
