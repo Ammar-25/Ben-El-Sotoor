@@ -321,6 +321,16 @@
     "authorNameEn": "اسم المؤلف (إنجليزي)",
     "coverImage": "صورة الغلاف",
     "bookUpdated": "تم تحديث الكتاب بنجاح",
-    "bookAdded": "تمت إضافة الكتاب بنجاح"
+    "bookAdded": "تمت إضافة الكتاب بنجاح",
+    "oldPrice": "السعر القديم",
+    "bookLanguage": "لغة الكتاب",
+    "pages": "عدد الصفحات",
+    "year": "سنة النشر",
+    "publisherAr": "الناشر (عربي)",
+    "publisherEn": "الناشر (إنجليزي)",
+    "descriptionAr": "الوصف (عربي)",
+    "descriptionEn": "الوصف (إنجليزي)",
+    "category": "التصنيف",
+    "rating": "التقييم"
   }
 }

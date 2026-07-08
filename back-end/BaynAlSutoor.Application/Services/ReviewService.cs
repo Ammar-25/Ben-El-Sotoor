@@ -107,7 +107,7 @@ namespace BaynAlSutoor.Application.Services
             var reviews = await _unitOfWork.Reviews.FindAsync(r => r.BookId == book.Id);
             var reviewList = reviews.ToList();
             book.ReviewsCount = reviewList.Count;
-            book.Rating = Math.Round((decimal)reviewList.Sum(r => r.Rating) / book.ReviewsCount, 1);
+            // Removed book.Rating recalculation because user wants rating to be a static number set by admin
 
             _unitOfWork.Books.Update(book);
             await _unitOfWork.CompleteAsync();

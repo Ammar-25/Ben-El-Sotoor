@@ -321,6 +321,16 @@
     "authorNameEn": "Author Name (English)",
     "coverImage": "Cover Image",
     "bookUpdated": "Book updated successfully",
-    "bookAdded": "Book added successfully"
+    "bookAdded": "Book added successfully",
+    "oldPrice": "Old Price",
+    "bookLanguage": "Book Language",
+    "pages": "Pages",
+    "year": "Year",
+    "publisherAr": "Publisher (Arabic)",
+    "publisherEn": "Publisher (English)",
+    "descriptionAr": "Description (Arabic)",
+    "descriptionEn": "Description (English)",
+    "category": "Category",
+    "rating": "Rating"
   }
 }

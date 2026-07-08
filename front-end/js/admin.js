@@ -658,18 +658,15 @@ function renderBooksTable(books) {
 
   tbody.innerHTML = books
     .map((b) => {
-      const title =
-        b.title?.ar ||
-        b.Title?.Ar ||
-        b.title?.en ||
-        b.Title?.En ||
-        "Unknown Title";
-      const authorName =
-        b.authorName?.ar ||
-        b.AuthorName?.Ar ||
-        b.authorName?.en ||
-        b.AuthorName?.En ||
-        b.authorId || b.AuthorId || "—";
+      const currentLang = typeof I18N !== "undefined" ? I18N.lang : "ar";
+      const titleAr = b.title?.ar || b.Title?.Ar;
+      const titleEn = b.title?.en || b.Title?.En;
+      const title = currentLang === "en" ? (titleEn || titleAr || "Unknown Title") : (titleAr || titleEn || "بدون عنوان");
+      
+      const authorNameAr = b.authorName?.ar || b.AuthorName?.Ar;
+      const authorNameEn = b.authorName?.en || b.AuthorName?.En;
+      const authorNameId = b.authorId || b.AuthorId || "—";
+      const authorName = currentLang === "en" ? (authorNameEn || authorNameAr || authorNameId) : (authorNameAr || authorNameEn || authorNameId);
       return `
       <tr>
         <td>
@@ -802,6 +799,33 @@ async function executeDeleteBook(bookId) {
   }
 }
 
+async function loadBookDropdowns() {
+  try {
+    const [authorsRes, categoriesRes] = await Promise.all([
+      AuthService.fetchAuthenticated("http://localhost:5033/api/authors"),
+      AuthService.fetchAuthenticated("http://localhost:5033/api/category")
+    ]);
+
+    if (authorsRes.ok) {
+      const authors = await authorsRes.json();
+      const list = document.getElementById("authors-list");
+      if (list) {
+        list.innerHTML = authors.map(a => `<option data-id="${a.id}" value="${a.name?.ar || a.Name?.Ar || ''} - ${a.name?.en || a.Name?.En || ''}"></option>`).join('');
+      }
+    }
+
+    if (categoriesRes.ok) {
+      const categories = await categoriesRes.json();
+      const list = document.getElementById("categories-list");
+      if (list) {
+        list.innerHTML = categories.map(c => `<option data-id="${c.id}" value="${c.nameAr || c.NameAr || ''} - ${c.nameEn || c.NameEn || ''}"></option>`).join('');
+      }
+    }
+  } catch (err) {
+    console.error("Failed to load dropdowns:", err);
+  }
+}
+
 async function openBookModal(bookId = null) {
   let m = document.getElementById("admin-book-modal");
   if (!m) {
@@ -810,7 +834,7 @@ async function openBookModal(bookId = null) {
     m.className = "modal";
     m.setAttribute("role", "dialog");
     m.setAttribute("aria-modal", "true");
-    m.innerHTML = `<div class="modal-card" style="max-width: 600px;"><button class="modal-close" data-modal-close aria-label="Close">✕</button><div class="modal-content"></div></div>`;
+    m.innerHTML = `<div class="modal-card" style="max-width: 800px;"><button class="modal-close" data-modal-close aria-label="Close">✕</button><div class="modal-content"></div></div>`;
     document.body.appendChild(m);
     m.addEventListener("click", (e) => {
       if (e.target === m || e.target.closest("[data-modal-close]"))
@@ -820,7 +844,6 @@ async function openBookModal(bookId = null) {
       if (e.key === "Escape" && m.classList.contains("open")) closeBookModal();
     });
   }
-
   const isEdit = !!bookId;
   const modalTitle = isEdit ? (typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.editBook") || "تعديل كتاب" : "تعديل كتاب") : (typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.addBook") || "إضافة كتاب" : "إضافة كتاب");
   const btnText = isEdit ? (typeof I18N !== "undefined" && I18N.t ? I18N.t("common.save") || "حفظ" : "حفظ") : (typeof I18N !== "undefined" && I18N.t ? I18N.t("common.add") || "إضافة" : "إضافة");
@@ -828,8 +851,10 @@ async function openBookModal(bookId = null) {
   m.querySelector(".modal-content").innerHTML = `
     <div style="padding: 2rem;">
       <h2 style="margin-bottom: 2rem; font-size: 1.5rem; font-weight: 800;">${modalTitle}</h2>
-      <form id="book-form" onsubmit="handleBookSubmit(event, ${bookId ? `'${bookId}'` : 'null'})">
+      <form id="book-form" onsubmit="event.preventDefault(); handleBookSubmit(event, ${bookId ? `'${bookId}'` : 'null'}); return false;">
+        <div id="book-form-error" class="error-message" style="display: none; color: #ef4444; margin-bottom: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: 500; font-size: 0.95rem;"></div>
         <div class="admin-form-grid">
+          <!-- Titles -->
           <div class="form-group">
             <label data-i18n="admin.bookTitleAr">العنوان (عربي)</label>
             <input type="text" id="book-title-ar" class="form-control" required>
@@ -838,19 +863,72 @@ async function openBookModal(bookId = null) {
             <label data-i18n="admin.bookTitleEn">العنوان (إنجليزي)</label>
             <input type="text" id="book-title-en" class="form-control" required>
           </div>
+          
+          <!-- Dropdowns -->
           <div class="form-group">
-            <label data-i18n="admin.authorNameAr">اسم المؤلف (عربي)</label>
-            <input type="text" id="book-author-ar" class="form-control" required>
+            <label data-i18n="admin.authorNameAr">المؤلف</label>
+            <input type="text" id="book-author" list="authors-list" class="form-control" autocomplete="off" placeholder="Search..." required>
+            <datalist id="authors-list"></datalist>
           </div>
           <div class="form-group">
-            <label data-i18n="admin.authorNameEn">اسم المؤلف (إنجليزي)</label>
-            <input type="text" id="book-author-en" class="form-control" required>
+            <label data-i18n="admin.category">التصنيف</label>
+            <input type="text" id="book-category" list="categories-list" class="form-control" autocomplete="off" placeholder="Search..." required>
+            <datalist id="categories-list"></datalist>
           </div>
+          
+          <!-- Language & Rating -->
+          <div class="form-group">
+            <label data-i18n="admin.bookLanguage">لغة الكتاب</label>
+            <select id="book-language" class="form-control status-select" required>
+              <option value="Arabic">Arabic / عربي</option>
+              <option value="English">English / إنجليزي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.rating">التقييم</label>
+            <input type="number" step="0.1" min="0" max="5" id="book-rating" class="form-control" required>
+          </div>
+
+          <!-- Pricing -->
           <div class="form-group">
             <label data-i18n="admin.price">السعر</label>
-            <input type="number" step="0.01" id="book-price" class="form-control" required>
+            <input type="number" step="0.01" min="0" id="book-price" class="form-control" required>
           </div>
           <div class="form-group">
+            <label data-i18n="admin.oldPrice">السعر القديم</label>
+            <input type="number" step="0.01" min="0" id="book-old-price" class="form-control" required>
+          </div>
+
+          <!-- Info -->
+          <div class="form-group">
+            <label data-i18n="admin.pages">عدد الصفحات</label>
+            <input type="number" min="1" id="book-pages" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.year">سنة النشر</label>
+            <input type="number" min="1000" max="9999" id="book-year" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.publisherAr">الناشر (عربي)</label>
+            <input type="text" id="book-publisher-ar" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.publisherEn">الناشر (إنجليزي)</label>
+            <input type="text" id="book-publisher-en" class="form-control" required>
+          </div>
+
+          <!-- Descriptions -->
+          <div class="form-group full-width">
+            <label data-i18n="admin.descriptionAr">الوصف (عربي)</label>
+            <textarea id="book-desc-ar" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.descriptionEn">الوصف (إنجليزي)</label>
+            <textarea id="book-desc-en" class="form-control" rows="3" required></textarea>
+          </div>
+
+          <!-- Cover Image -->
+          <div class="form-group full-width">
             <label data-i18n="admin.coverImage">صورة الغلاف</label>
             <input type="file" id="book-cover-file" accept="image/*" class="form-control">
             <input type="hidden" id="book-cover-url">
@@ -864,6 +942,8 @@ async function openBookModal(bookId = null) {
       </form>
     </div>
   `;
+
+  loadBookDropdowns();
 
   if (typeof I18N !== "undefined" && I18N.apply) {
     I18N.apply(m);
@@ -890,9 +970,35 @@ async function openBookModal(bookId = null) {
         const data = await res.json();
         document.getElementById("book-title-ar").value = data.title?.ar || data.Title?.Ar || "";
         document.getElementById("book-title-en").value = data.title?.en || data.Title?.En || "";
-        document.getElementById("book-author-ar").value = data.authorName?.ar || data.AuthorName?.Ar || "";
-        document.getElementById("book-author-en").value = data.authorName?.en || data.AuthorName?.En || "";
+        
+        // Wait briefly for datalists to populate, or just set it
+        setTimeout(() => {
+          const authorInput = document.getElementById("book-author");
+          const authorList = document.getElementById("authors-list");
+          const authorOption = authorList ? Array.from(authorList.options).find(o => o.getAttribute("data-id") == (data.authorId || data.AuthorId)) : null;
+          if (authorOption) authorInput.value = authorOption.value;
+          else if (data.authorName) authorInput.value = (data.authorName?.ar || data.authorName?.en || data.AuthorName?.Ar || data.AuthorName?.En || "");
+
+          const categoryInput = document.getElementById("book-category");
+          const categoryList = document.getElementById("categories-list");
+          const cat = data.category || data.Category || "";
+          const catOption = categoryList ? Array.from(categoryList.options).find(o => o.value.includes(cat) || o.getAttribute("data-id") == cat) : null;
+          categoryInput.value = catOption ? catOption.value : cat;
+        }, 300);
+
+        const langEn = data.bookLanguage?.en || data.BookLanguage?.En || "";
+        document.getElementById("book-language").value = langEn.includes("Arabic") ? "Arabic" : "English";
+        
+        document.getElementById("book-rating").value = data.rating || data.Rating || 0;
         document.getElementById("book-price").value = data.price || data.Price || 0;
+        document.getElementById("book-old-price").value = data.oldPrice || data.OldPrice || 0;
+        document.getElementById("book-pages").value = data.pages || data.Pages || 0;
+        document.getElementById("book-year").value = data.year || data.Year || new Date().getFullYear();
+        document.getElementById("book-publisher-ar").value = data.publisher?.ar || data.Publisher?.Ar || "";
+        document.getElementById("book-publisher-en").value = data.publisher?.en || data.Publisher?.En || "";
+        document.getElementById("book-desc-ar").value = data.description?.ar || data.Description?.Ar || "";
+        document.getElementById("book-desc-en").value = data.description?.en || data.Description?.En || "";
+
         const currentCover = data.cover || data.Cover || "";
         document.getElementById("book-cover-url").value = currentCover;
         const preview = document.getElementById("book-cover-preview");
@@ -931,6 +1037,12 @@ async function handleBookSubmit(e, bookId) {
   const btn = document.getElementById("book-submit-btn");
   btn.disabled = true;
 
+  const errDiv = document.getElementById("book-form-error");
+  if (errDiv) {
+    errDiv.style.display = "none";
+    errDiv.innerHTML = "";
+  }
+
   let coverUrl = document.getElementById("book-cover-url").value;
   const fileInput = document.getElementById("book-cover-file");
   if (fileInput.files && fileInput.files[0]) {
@@ -957,18 +1069,49 @@ async function handleBookSubmit(e, bookId) {
     }
   }
 
+  const authorInput = document.getElementById("book-author").value;
+  const authorList = document.getElementById("authors-list");
+  let authorId = 0;
+  if (authorList) {
+    const option = Array.from(authorList.options).find(o => o.value === authorInput);
+    if (option) authorId = parseInt(option.getAttribute("data-id")) || 0;
+  }
+
+  const categoryInput = document.getElementById("book-category").value;
+  const categoryList = document.getElementById("categories-list");
+  let categoryStr = categoryInput;
+  if (categoryList) {
+    const catOption = Array.from(categoryList.options).find(o => o.value === categoryInput);
+    if (catOption) categoryStr = catOption.getAttribute("data-id") || categoryInput;
+  }
+
+  const langSelect = document.getElementById("book-language").value;
+  const langAr = langSelect === "Arabic" ? "عربي" : "إنجليزي";
+  const langEn = langSelect;
+
   const payload = {
-    title: {
-      ar: document.getElementById("book-title-ar").value.trim(),
-      en: document.getElementById("book-title-en").value.trim()
-    },
-    authorName: {
-      ar: document.getElementById("book-author-ar").value.trim(),
-      en: document.getElementById("book-author-en").value.trim()
-    },
-    price: parseFloat(document.getElementById("book-price").value),
-    cover: coverUrl
+    TitleAr: document.getElementById("book-title-ar").value.trim() || "",
+    TitleEn: document.getElementById("book-title-en").value.trim() || "",
+    AuthorId: authorId,
+    Category: categoryStr || "",
+    Cover: coverUrl || "",
+    DescriptionAr: document.getElementById("book-desc-ar").value.trim() || "",
+    DescriptionEn: document.getElementById("book-desc-en").value.trim() || "",
+    Price: parseFloat(document.getElementById("book-price").value) || 0,
+    OldPrice: parseFloat(document.getElementById("book-old-price").value) || 0,
+    IsNew: false,
+    PublisherAr: document.getElementById("book-publisher-ar").value.trim() || "",
+    PublisherEn: document.getElementById("book-publisher-en").value.trim() || "",
+    LanguageAr: langAr,
+    LanguageEn: langEn,
+    Pages: parseInt(document.getElementById("book-pages").value) || 0,
+    Year: parseInt(document.getElementById("book-year").value) || new Date().getFullYear(),
+    Rating: parseFloat(document.getElementById("book-rating").value) || 0
   };
+
+  if (bookId) {
+    payload.Id = parseInt(bookId);
+  }
 
   const isEdit = !!bookId;
   const url = isEdit ? `http://localhost:5033/api/books/${bookId}` : `http://localhost:5033/api/books`;
@@ -992,13 +1135,35 @@ async function handleBookSubmit(e, bookId) {
       loadAdminBooks(currentBooksPage);
       loadAdminData();
     } else {
-      if (typeof UI !== "undefined" && UI.showToast) {
-        UI.showToast("Failed to save book", "error");
+      let errorMsg = "Failed to save book";
+      try {
+        const errData = await res.json();
+        if (errData.errors) {
+            errorMsg = Object.values(errData.errors).flat().join('<br>');
+        } else if (errData.message) {
+            errorMsg = errData.message;
+        } else if (errData.title) {
+            errorMsg = errData.title;
+        }
+      } catch (e) {}
+      
+      if (errDiv) {
+        errDiv.innerHTML = errorMsg;
+        errDiv.style.display = "block";
+        const modalContent = document.querySelector(".modal-content");
+        if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (typeof UI !== "undefined" && UI.showToast) {
+        UI.showToast(errorMsg, "error");
       }
     }
   } catch (err) {
     console.error("Error saving book:", err);
-    if (typeof UI !== "undefined" && UI.showToast) {
+    if (errDiv) {
+      errDiv.innerHTML = "حدث خطأ في الاتصال أو البيانات غير صالحة.";
+      errDiv.style.display = "block";
+      const modalContent = document.querySelector(".modal-content");
+      if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (typeof UI !== "undefined" && UI.showToast) {
       UI.showToast("Connection error", "error");
     }
   } finally {

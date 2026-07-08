@@ -358,6 +358,11 @@ async function initBookPage() {
       btn.disabled = false;
       
       if (created) {
+        book.reviewsCount = (book.reviewsCount || 0) + 1;
+        const reviewsCountElem = host.querySelector('.rating-reviews-count');
+        if (reviewsCountElem) {
+          reviewsCountElem.innerHTML = `${book.reviewsCount} ${I18N.t('common.reviews')}`;
+        }
         reviewForm.reset();
         UI.toast(I18N.lang === 'ar' ? 'تمت إضافة مراجعتك بنجاح!' : 'Your review has been added!');
         currentPage = 1;

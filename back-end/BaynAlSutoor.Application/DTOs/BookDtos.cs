@@ -53,6 +53,7 @@ namespace BaynAlSutoor.Application.DTOs
         public string LanguageEn { get; set; } = string.Empty;
         public int Pages { get; set; }
         public int Year { get; set; }
+        public decimal Rating { get; set; }
         public string? DigitalAssetUrl { get; set; }
     }
 
