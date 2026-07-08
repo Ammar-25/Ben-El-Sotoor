@@ -280,7 +280,6 @@ const UI = (() => {
       <p class="author-bio">${I18N.pick(author.bio)}</p>
       <div class="author-stats">
         <div><b>${author.booksCount}</b><span data-i18n="common.books">${I18N.t('common.books')}</span></div>
-        <div><b>${(author.followers / 1000).toFixed(1)}k</b><span data-i18n="common.followers">${I18N.t('common.followers')}</span></div>
         <div><b>${author.rating}</b><span>★</span></div>
       </div>
       <a class="btn btn-outline" href="author-details.html?id=${author.id}" data-i18n="common.viewProfile">${I18N.t('common.viewProfile')}</a>`;

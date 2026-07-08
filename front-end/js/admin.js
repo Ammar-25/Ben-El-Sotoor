@@ -14,6 +14,50 @@ let currentBooksPage = 1;
 let currentBooksTotalPages = 1;
 const BOOKS_PER_PAGE = 10;
 
+let currentAuthorsPage = 1;
+let currentAuthorsTotalPages = 1;
+const AUTHORS_PER_PAGE = 10;
+let allAuthorsData = [];
+
+function setupFileUpload(fileInputId, hiddenInputId, previewImgId) {
+  const fileInput = document.getElementById(fileInputId);
+  const hiddenInput = document.getElementById(hiddenInputId);
+  const previewImg = document.getElementById(previewImgId);
+
+  if (!fileInput || !hiddenInput || !previewImg) return;
+
+  fileInput.addEventListener("change", async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        previewImg.src = evt.target.result;
+        previewImg.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const uploadRes = await AuthService.fetchAuthenticated("http://localhost:5033/api/upload", {
+          method: "POST",
+          body: formData
+        });
+        if (uploadRes.ok) {
+          const uploadData = await uploadRes.json();
+          hiddenInput.value = uploadData.url;
+        } else {
+          if (typeof UI !== "undefined" && UI.showToast) UI.showToast("Failed to upload image", "error");
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        if (typeof UI !== "undefined" && UI.showToast) UI.showToast("Image upload connection error", "error");
+      }
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Authentication check
   if (typeof AuthService !== "undefined") {
@@ -49,6 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (booksPanel && !booksPanel.hidden) {
       if (typeof loadAdminBooks === "function") {
         loadAdminBooks(currentBooksPage);
+      }
+    }
+    const authorsPanel = document.querySelector(
+      '.admin-panel[data-panel="authors"]',
+    );
+    if (authorsPanel && !authorsPanel.hidden) {
+      if (typeof loadAdminAuthors === "function") {
+        loadAdminAuthors(currentAuthorsPage);
       }
     }
   });
@@ -111,6 +163,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const prevAuthorsBtn = document.getElementById("authors-prev-btn");
+  const nextAuthorsBtn = document.getElementById("authors-next-btn");
+
+  if (prevAuthorsBtn) {
+    prevAuthorsBtn.addEventListener("click", () => {
+      if (currentAuthorsPage > 1) {
+        loadAdminAuthors(currentAuthorsPage - 1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  }
+
+  if (nextAuthorsBtn) {
+    nextAuthorsBtn.addEventListener("click", () => {
+      loadAdminAuthors(currentAuthorsPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
   // Logout handler
   const logoutBtn = document.getElementById("admin-logout-btn");
   if (logoutBtn) {
@@ -130,6 +201,18 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
         loadAdminBooks(1);
+      }, 300);
+    });
+  }
+
+  // Setup search listener for authors
+  const authorsSearchInput = document.getElementById("admin-authors-search");
+  if (authorsSearchInput) {
+    let debounceTimerAuthors;
+    authorsSearchInput.addEventListener("input", (e) => {
+      clearTimeout(debounceTimerAuthors);
+      debounceTimerAuthors = setTimeout(() => {
+        loadAdminAuthors(1);
       }, 300);
     });
   }
@@ -164,6 +247,10 @@ function initAdminTabs() {
       } else if (btn.dataset.tab === "books") {
         if (typeof loadAdminBooks === "function") {
           loadAdminBooks(1);
+        }
+      } else if (btn.dataset.tab === "authors") {
+        if (typeof loadAdminAuthors === "function") {
+          loadAdminAuthors(1);
         }
       }
     });
@@ -1168,5 +1255,393 @@ async function handleBookSubmit(e, bookId) {
     }
   } finally {
     btn.disabled = false;
+  }
+}
+
+// --- Authors Logic ---
+async function loadAdminAuthors(page = 1) {
+  const tbody = document.getElementById("admin-authors-tbody");
+  if (!tbody) return;
+
+  const searchInput = document.getElementById("admin-authors-search");
+  const searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  tbody.innerHTML = `<tr><td colspan="5" style="text-align:center"><div class="spinner" style="margin: 1rem auto;"></div></td></tr>`;
+
+  try {
+    const res = await AuthService.fetchAuthenticated("http://localhost:5033/api/authors");
+    if (res.ok) {
+      let authors = await res.json();
+      
+      // Filter by search query
+      if (searchQuery) {
+        authors = authors.filter(a => 
+          (a.name?.en && a.name.en.toLowerCase().includes(searchQuery)) ||
+          (a.name?.ar && a.name.ar.toLowerCase().includes(searchQuery)) ||
+          (a.Name?.En && a.Name.En.toLowerCase().includes(searchQuery)) ||
+          (a.Name?.Ar && a.Name.Ar.toLowerCase().includes(searchQuery))
+        );
+      }
+      
+      allAuthorsData = authors;
+      currentAuthorsTotalPages = Math.ceil(authors.length / AUTHORS_PER_PAGE) || 1;
+      currentAuthorsPage = page;
+      
+      if (currentAuthorsPage > currentAuthorsTotalPages) currentAuthorsPage = currentAuthorsTotalPages;
+      if (currentAuthorsPage < 1) currentAuthorsPage = 1;
+      
+      const startIndex = (currentAuthorsPage - 1) * AUTHORS_PER_PAGE;
+      const paginatedAuthors = authors.slice(startIndex, startIndex + AUTHORS_PER_PAGE);
+      
+      renderAuthorsTable(paginatedAuthors);
+      updateAuthorsPagination(currentAuthorsPage, currentAuthorsTotalPages);
+    } else {
+      const msg = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.loadAuthorsFailed") || "فشل في تحميل المؤلفين" : "فشل في تحميل المؤلفين";
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--error-color);">${msg}</td></tr>`;
+    }
+  } catch (err) {
+    console.error("Error fetching authors:", err);
+    const msg = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.serverError") || "خطأ في الاتصال بالخادم" : "خطأ في الاتصال بالخادم";
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--error-color);">${msg}</td></tr>`;
+  }
+}
+
+function renderAuthorsTable(authors) {
+  const tbody = document.getElementById("admin-authors-tbody");
+  if (!authors || authors.length === 0) {
+    const msg = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.noAuthors") || "لا يوجد مؤلفين" : "لا يوجد مؤلفين";
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center">${msg}</td></tr>`;
+    return;
+  }
+
+  const deleteBtnText = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.delete") || "حذف" : "حذف";
+  const editBtnText = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.edit") || "تعديل" : "تعديل";
+
+  tbody.innerHTML = authors
+    .map((a) => {
+      const id = a.id || a.Id;
+      let nameStr = a.name?.ar || a.Name?.Ar || "";
+      if (typeof I18N !== "undefined" && I18N.lang === "en") {
+        nameStr = a.name?.en || a.Name?.En || nameStr;
+      }
+      const photo = a.photo || a.Photo || "assets/images/default-author.png";
+      const rating = a.rating || a.Rating || 0;
+
+      return `
+        <tr>
+          <td style="text-align:center;">
+            <img src="${photo}" alt="Photo" style="width:40px; height:40px; object-fit:cover; border-radius:50%;" onerror="this.src='assets/images/default-author.png'">
+          </td>
+          <td>${nameStr}</td>
+          <td>${rating}</td>
+          <td style="text-align: center;">
+            <button class="btn-icon" title="${editBtnText}" aria-label="${editBtnText}" onclick="openAuthorModal('${id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </button>
+            <button class="btn-icon" title="${deleteBtnText}" aria-label="${deleteBtnText}" style="color: var(--error-color)" data-author-id="${id}" data-author-name="${nameStr.replace(/"/g, '&quot;')}" onclick="confirmDeleteAuthor(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function updateAuthorsPagination(page, totalPages) {
+  const prevBtn = document.getElementById("authors-prev-btn");
+  const nextBtn = document.getElementById("authors-next-btn");
+  const pageInfo = document.getElementById("authors-page-info");
+
+  if (prevBtn) prevBtn.disabled = page <= 1;
+  if (nextBtn) nextBtn.disabled = page >= totalPages;
+  if (pageInfo) {
+    const template = typeof I18N !== "undefined" && I18N.t ? I18N.t("common.pageOf") : "صفحة {0} من {1}";
+    const text = template === "common.pageOf" ? "صفحة {0} من {1}" : template;
+    pageInfo.textContent = text.replace("{0}", page).replace("{1}", totalPages);
+  }
+}
+
+async function openAuthorModal(authorId = null) {
+  let m = document.getElementById("admin-author-modal");
+  if (!m) {
+    m = document.createElement("div");
+    m.id = "admin-author-modal";
+    m.className = "modal";
+    m.setAttribute("role", "dialog");
+    m.setAttribute("aria-modal", "true");
+    m.innerHTML = `<div class="modal-card" style="max-width: 800px;"><button class="modal-close" data-modal-close aria-label="Close">✕</button><div class="modal-content"></div></div>`;
+    document.body.appendChild(m);
+    m.addEventListener("click", (e) => {
+      if (e.target === m || e.target.closest("[data-modal-close]")) closeAuthorModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && m.classList.contains("open")) closeAuthorModal();
+    });
+  }
+  const isEdit = !!authorId && authorId !== 'undefined' && authorId !== 'null';
+  const modalTitle = isEdit ? (typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.editAuthor") || "تعديل مؤلف" : "تعديل مؤلف") : (typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.addAuthor") || "إضافة مؤلف" : "إضافة مؤلف");
+  const btnText = isEdit ? (typeof I18N !== "undefined" && I18N.t ? I18N.t("common.save") || "حفظ" : "حفظ") : (typeof I18N !== "undefined" && I18N.t ? I18N.t("common.add") || "إضافة" : "إضافة");
+
+  m.querySelector(".modal-content").innerHTML = `
+    <div style="padding: 2rem;">
+      <h2 style="margin-bottom: 2rem; font-size: 1.5rem; font-weight: 800;">${modalTitle}</h2>
+      <form id="author-form" onsubmit="event.preventDefault(); handleAuthorSubmit(event, ${isEdit ? `'${authorId}'` : 'null'}); return false;">
+        <div id="author-form-error" class="error-message" style="display: none; color: #ef4444; margin-bottom: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: 500; font-size: 0.95rem;"></div>
+        <div class="admin-form-grid">
+          <div class="form-group">
+            <label data-i18n="admin.authorNameAr">الاسم (عربي)</label>
+            <input type="text" id="author-name-ar" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.authorNameEn">الاسم (إنجليزي)</label>
+            <input type="text" id="author-name-en" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label data-i18n="admin.rating">التقييم</label>
+            <input type="number" step="0.1" min="0" max="5" id="author-rating" class="form-control" required value="0">
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorQuoteAr">مقولة (عربي)</label>
+            <textarea id="author-quote-ar" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorQuoteEn">مقولة (إنجليزي)</label>
+            <textarea id="author-quote-en" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorBioAr">نبذة (عربي)</label>
+            <textarea id="author-bio-ar" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorBioEn">نبذة (إنجليزي)</label>
+            <textarea id="author-bio-en" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.achievementsAr">الإنجازات (عربي) - مفصولة بفاصلة</label>
+            <input type="text" id="author-achievements-ar" class="form-control" placeholder="جائزة 1, جائزة 2">
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.achievementsEn">الإنجازات (إنجليزي) - مفصولة بفاصلة</label>
+            <input type="text" id="author-achievements-en" class="form-control" placeholder="Award 1, Award 2">
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorPhoto">الصورة</label>
+            <input type="file" id="author-photo-file" accept="image/*" class="form-control">
+            <input type="hidden" id="author-photo-url">
+            <img id="author-photo-preview" src="" style="display:none; max-width: 100px; height: 100px; object-fit: cover; margin-top: 0.75rem; border-radius: 50%; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          </div>
+          <div class="form-group full-width">
+            <label data-i18n="admin.authorBanner">صورة الغلاف (Banner)</label>
+            <input type="file" id="author-banner-file" accept="image/*" class="form-control">
+            <input type="hidden" id="author-banner-url">
+            <img id="author-banner-preview" src="" style="display:none; width: 100%; max-height: 150px; object-fit: cover; margin-top: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2.5rem;">
+          <button type="button" class="btn btn-ghost" onclick="closeAuthorModal()" data-i18n="common.cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="author-submit-btn">${btnText}</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  if (typeof I18N !== "undefined" && I18N.apply) {
+    I18N.apply(m);
+  }
+
+  if (isEdit) {
+    const submitBtn = document.getElementById("author-submit-btn");
+    submitBtn.disabled = true;
+    try {
+      const res = await AuthService.fetchAuthenticated(`http://localhost:5033/api/authors/${authorId}`);
+      if (res.ok) {
+        const author = await res.json();
+        document.getElementById("author-name-ar").value = author.name?.ar || author.Name?.Ar || "";
+        document.getElementById("author-name-en").value = author.name?.en || author.Name?.En || "";
+        document.getElementById("author-rating").value = author.rating || author.Rating || 0;
+        document.getElementById("author-quote-ar").value = author.quote?.ar || author.Quote?.Ar || "";
+        document.getElementById("author-quote-en").value = author.quote?.en || author.Quote?.En || "";
+        document.getElementById("author-bio-ar").value = author.bio?.ar || author.Bio?.Ar || "";
+        document.getElementById("author-bio-en").value = author.bio?.en || author.Bio?.En || "";
+        let achAr = author.achievements?.ar || author.Achievements?.Ar || [];
+        let achEn = author.achievements?.en || author.Achievements?.En || [];
+        document.getElementById("author-achievements-ar").value = Array.isArray(achAr) ? achAr.join(", ") : achAr;
+        document.getElementById("author-achievements-en").value = Array.isArray(achEn) ? achEn.join(", ") : achEn;
+
+        const photo = author.photo || author.Photo;
+        if (photo) {
+          document.getElementById("author-photo-url").value = photo;
+          const photoImg = document.getElementById("author-photo-preview");
+          photoImg.src = photo;
+          photoImg.style.display = "block";
+        }
+        const banner = author.banner || author.Banner;
+        if (banner) {
+          document.getElementById("author-banner-url").value = banner;
+          const bannerImg = document.getElementById("author-banner-preview");
+          bannerImg.src = banner;
+          bannerImg.style.display = "block";
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      const errDiv = document.getElementById("author-form-error");
+      if (errDiv) {
+        errDiv.textContent = "خطأ في التحميل";
+        errDiv.style.display = "block";
+      }
+    } finally {
+      submitBtn.disabled = false;
+    }
+  }
+
+  // Setup file uploads if defined
+  if (typeof setupFileUpload === "function") {
+    setupFileUpload("author-photo-file", "author-photo-url", "author-photo-preview");
+    setupFileUpload("author-banner-file", "author-banner-url", "author-banner-preview");
+  }
+
+  m.classList.add("open");
+}
+
+function closeAuthorModal() {
+  const m = document.getElementById("admin-author-modal");
+  if (m) m.classList.remove("open");
+}
+
+async function handleAuthorSubmit(e, authorId) {
+  e.preventDefault();
+  const btn = document.getElementById("author-submit-btn");
+  const originalText = btn.textContent;
+  btn.textContent = "...";
+  btn.disabled = true;
+
+  const errDiv = document.getElementById("author-form-error");
+  errDiv.style.display = "none";
+  
+  const payload = {
+    nameAr: document.getElementById("author-name-ar").value.trim(),
+    nameEn: document.getElementById("author-name-en").value.trim(),
+    followers: 0,
+    rating: parseFloat(document.getElementById("author-rating").value) || 0,
+    quoteAr: document.getElementById("author-quote-ar").value.trim(),
+    quoteEn: document.getElementById("author-quote-en").value.trim(),
+    bioAr: document.getElementById("author-bio-ar").value.trim(),
+    bioEn: document.getElementById("author-bio-en").value.trim(),
+    photo: document.getElementById("author-photo-url").value || "",
+    banner: document.getElementById("author-banner-url").value || ""
+  };
+  
+  const achArStr = document.getElementById("author-achievements-ar").value.trim();
+  payload.achievementsAr = achArStr ? achArStr.split(",").map(s => s.trim()).filter(s => s) : [];
+  const achEnStr = document.getElementById("author-achievements-en").value.trim();
+  payload.achievementsEn = achEnStr ? achEnStr.split(",").map(s => s.trim()).filter(s => s) : [];
+
+  const isEdit = !!authorId && authorId !== 'undefined' && authorId !== 'null';
+  const url = isEdit ? `http://localhost:5033/api/authors/${authorId}` : "http://localhost:5033/api/authors";
+  const method = isEdit ? "PUT" : "POST";
+
+  try {
+    const res = await AuthService.fetchAuthenticated(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      closeAuthorModal();
+      loadAdminAuthors(currentAuthorsPage);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      errDiv.textContent = data.message || "Failed to save author.";
+      errDiv.style.display = "block";
+    }
+  } catch (err) {
+    console.error(err);
+    errDiv.textContent = "Error saving author.";
+    errDiv.style.display = "block";
+  } finally {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+function confirmDeleteAuthor(btn) {
+  const authorId = btn.getAttribute('data-author-id');
+  const authorName = btn.getAttribute('data-author-name');
+
+  let m = document.getElementById("admin-delete-modal");
+  if (!m) {
+    m = document.createElement("div");
+    m.id = "admin-delete-modal";
+    m.className = "modal";
+    m.setAttribute("role", "dialog");
+    m.setAttribute("aria-modal", "true");
+    m.innerHTML = `<div class="modal-card" style="max-width: 400px; text-align: center;"><button class="modal-close" data-modal-close aria-label="Close">✕</button><div class="modal-content"></div></div>`;
+    document.body.appendChild(m);
+    m.addEventListener("click", (e) => {
+      if (e.target === m || e.target.closest("[data-modal-close]"))
+        closeDeleteModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && m.classList.contains("open")) closeDeleteModal();
+    });
+  }
+
+  m.querySelector(".modal-content").innerHTML = `
+    <div style="padding: 1.5rem;">
+      <h3 style="margin-bottom: 1rem;" data-i18n="admin.deleteAuthorConfirm">هل أنت متأكد من حذف هذا المؤلف؟</h3>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.125rem;">${authorName}</p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button class="btn btn-secondary" onclick="closeDeleteModal()" data-i18n="common.cancel">إلغاء</button>
+        <button class="btn btn-danger" onclick="executeDeleteAuthor(${authorId})" data-i18n="admin.delete">حذف</button>
+      </div>
+    </div>
+  `;
+
+  if (typeof I18N !== "undefined" && I18N.apply) {
+    I18N.apply(m);
+  }
+
+  m.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+async function executeDeleteAuthor(id) {
+  try {
+    const res = await AuthService.fetchAuthenticated(
+      `http://localhost:5033/api/authors/${id}`,
+      { method: "DELETE" }
+    );
+    if (res.ok) {
+      if (typeof UI !== "undefined" && UI.showToast) {
+        const msg = typeof I18N !== "undefined" && I18N.t ? I18N.t("admin.authorDeleted") || "Author deleted successfully" : "Author deleted successfully";
+        UI.showToast(msg, "success");
+      }
+      closeDeleteModal();
+      loadAdminAuthors(currentAuthorsPage);
+      loadAdminData();
+    } else {
+      const data = await res.json().catch(() => ({}));
+      if (typeof UI !== "undefined" && UI.showToast) {
+        UI.showToast(data.message || "Failed to delete author.", "error");
+      } else {
+        alert(data.message || "Failed to delete author.");
+      }
+    }
+  } catch (err) {
+    console.error("Error deleting author:", err);
+    if (typeof UI !== "undefined" && UI.showToast) {
+      UI.showToast("Error communicating with server.", "error");
+    } else {
+      alert("Error communicating with server.");
+    }
   }
 }

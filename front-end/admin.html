@@ -71,6 +71,7 @@
         <nav class="admin-nav" role="tablist">
           <button class="admin-nav-item active" data-tab="overview" data-i18n="admin.overview">نظرة عامة</button>
           <button class="admin-nav-item" data-tab="books" data-i18n="admin.manageBooks">إدارة الكتب</button>
+          <button class="admin-nav-item" data-tab="authors" data-i18n="admin.manageAuthors">إدارة المؤلفين</button>
           <button class="admin-nav-item" data-tab="orders" data-i18n="admin.manageOrders">إدارة الطلبات</button>
           <button class="admin-nav-item" data-tab="users" data-i18n="admin.manageUsers">إدارة المستخدمين</button>
         </nav>
@@ -176,6 +177,47 @@
               <button class="btn btn-secondary" id="books-prev-btn" disabled data-i18n="common.prev">السابق</button>
               <span id="books-page-info">صفحة 1 من 1</span>
               <button class="btn btn-secondary" id="books-next-btn" disabled data-i18n="common.next">التالي</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Authors Panel -->
+        <div class="admin-panel" data-panel="authors" hidden>
+          <div class="admin-panel-header" style="justify-content: space-between;">
+            <h3 data-i18n="admin.manageAuthors">إدارة المؤلفين</h3>
+            
+            <div class="admin-search-wrapper" style="margin: 0 auto; flex: 1; max-width: 400px; justify-content: center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="admin-search-icon">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="admin-authors-search" class="admin-search-input" data-i18n-attr="placeholder:common.search" placeholder="Search...">
+            </div>
+
+            <button class="btn btn-primary" data-i18n="admin.addAuthor" onclick="openAuthorModal()">+ إضافة مؤلف</button>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th data-i18n="admin.authorPhoto">الصورة</th>
+                  <th data-i18n="admin.authorName">اسم المؤلف</th>
+                  <th data-i18n="admin.rating">التقييم</th>
+                  <th data-i18n="admin.actions" style="text-align: center;">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="admin-authors-tbody">
+                <tr>
+                  <td colspan="4" style="text-align:center">
+                    <div class="spinner" style="margin: 1rem auto;"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="pagination-controls" id="authors-pagination">
+              <button class="btn btn-secondary" id="authors-prev-btn" disabled data-i18n="common.prev">السابق</button>
+              <span id="authors-page-info">صفحة 1 من 1</span>
+              <button class="btn btn-secondary" id="authors-next-btn" disabled data-i18n="common.next">التالي</button>
             </div>
           </div>
         </div>

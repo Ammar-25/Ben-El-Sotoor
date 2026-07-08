@@ -35,7 +35,6 @@ async function initAuthorDetails() {
         <h1>${I18N.pick(author.name)}</h1>
         <div class="author-stats" style="justify-content:flex-start">
           <div><b>${author.booksCount}</b> <span data-i18n="common.books">${I18N.t('common.books')}</span></div>
-          <div><b>${(author.followers / 1000).toFixed(1)}k</b> <span data-i18n="common.followers">${I18N.t('common.followers')}</span></div>
           <div><b>${author.rating}</b> ★</div>
         </div>
       </div>

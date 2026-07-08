@@ -76,6 +76,20 @@ namespace BaynAlSutoor.Application.Services
             var author = await _unitOfWork.Authors.GetByIdAsync(id);
             if (author == null) return false;
 
+            var books = await _unitOfWork.Books.FindAsync(b => b.AuthorId == id);
+            foreach (var book in books)
+            {
+                var reviews = await _unitOfWork.Reviews.FindAsync(r => r.BookId == book.Id);
+                if (reviews.Any())
+                {
+                    _unitOfWork.Reviews.DeleteRange(reviews);
+                }
+            }
+            if (books.Any())
+            {
+                _unitOfWork.Books.DeleteRange(books);
+            }
+
             _unitOfWork.Authors.Delete(author);
             await _unitOfWork.CompleteAsync();
             return true;
