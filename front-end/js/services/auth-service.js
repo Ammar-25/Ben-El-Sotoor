@@ -37,22 +37,35 @@ const AuthService = (() => {
   }
 
   /* ---------- Token Management ---------- */
-  function saveTokens(token, refreshToken) {
-    if (token) localStorage.setItem("auth_token", token);
-    if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
+  function getStorage() {
+    return localStorage.getItem("use_local_storage") ? localStorage : sessionStorage;
+  }
+
+  function saveTokens(token, refreshToken, rememberMe = true) {
+    if (rememberMe) {
+      localStorage.setItem("use_local_storage", "true");
+    } else {
+      localStorage.removeItem("use_local_storage");
+    }
+    const storage = getStorage();
+    if (token) storage.setItem("auth_token", token);
+    if (refreshToken) storage.setItem("refresh_token", refreshToken);
   }
 
   function getToken() {
-    return localStorage.getItem("auth_token");
+    return getStorage().getItem("auth_token") || localStorage.getItem("auth_token") || sessionStorage.getItem("auth_token");
   }
 
   function getRefreshToken() {
-    return localStorage.getItem("refresh_token");
+    return getStorage().getItem("refresh_token") || localStorage.getItem("refresh_token") || sessionStorage.getItem("refresh_token");
   }
 
   function clearTokens() {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("refresh_token");
+    sessionStorage.removeItem("auth_token");
+    sessionStorage.removeItem("refresh_token");
+    localStorage.removeItem("use_local_storage");
   }
 
   function isAuthenticated() {
@@ -88,7 +101,7 @@ const AuthService = (() => {
   /**
    * Send a login request.
    */
-  async function login(email, password) {
+  async function login(email, password, rememberMe = true) {
     try {
       const response = await fetch(`${API_BASE}/login`, {
         method: "POST",
@@ -96,7 +109,7 @@ const AuthService = (() => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, rememberMe }),
       });
 
       const data = await response.json();
@@ -106,7 +119,7 @@ const AuthService = (() => {
         const token =
           data.token || data.accessToken || data.Token || data.AccessToken;
         const refreshToken = data.refreshToken || data.RefreshToken;
-        saveTokens(token, refreshToken);
+        saveTokens(token, refreshToken, rememberMe);
         return {
           ok: true,
           token,
@@ -117,8 +130,8 @@ const AuthService = (() => {
       return { ok: false, message: data.message || "Login failed" };
     } catch (error) {
       console.warn("[AuthService] Real API failed, using simulation:", error);
-      const res = await simulateLogin(email, password);
-      if (res.ok) saveTokens(res.token, res.refreshToken);
+      const res = await simulateLogin(email, password, rememberMe);
+      if (res.ok) saveTokens(res.token, res.refreshToken, rememberMe);
       return res;
     }
   }
@@ -265,7 +278,7 @@ const AuthService = (() => {
     return response;
   }
 
-  function simulateLogin(email, password) {
+  function simulateLogin(email, password, rememberMe = true) {
     return new Promise((resolve) => {
       setTimeout(() => {
         if (email && password.length >= 6) {

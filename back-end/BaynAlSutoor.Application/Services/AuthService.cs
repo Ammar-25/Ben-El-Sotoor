@@ -94,7 +94,7 @@ namespace BaynAlSutoor.Application.Services
             await _unitOfWork.AuditLogs.AddAsync(log);
             await _unitOfWork.CompleteAsync();
 
-            return await LoginUserAsync(user);
+            return await LoginUserAsync(user, request.RememberMe);
         }
 
         public async Task<AuthResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request)
@@ -187,7 +187,7 @@ namespace BaynAlSutoor.Application.Services
             return await LoginUserAsync(user);
         }
 
-        private async Task<AuthResponseDto> LoginUserAsync(User user)
+        private async Task<AuthResponseDto> LoginUserAsync(User user, bool rememberMe = false)
         {
             var fullUser = await _unitOfWork.Users.GetUserWithRolesAndPermissionsAsync(user.Id);
             var roles = fullUser?.UserRoles?.Select(ur => ur.Role.Name) ?? new List<string> { "Reader" };
@@ -199,7 +199,7 @@ namespace BaynAlSutoor.Application.Services
             var refreshToken = new RefreshToken
             {
                 Token = refreshTokenString,
-                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                ExpiresAt = rememberMe ? DateTime.UtcNow.AddDays(30) : DateTime.UtcNow.AddDays(1),
                 CreatedAt = DateTime.UtcNow,
                 UserId = user.Id
             };

@@ -501,6 +501,8 @@ function initAuth() {
         const email = document.getElementById("login-email").value.trim();
         const pass = document.getElementById("login-pass").value;
 
+        const rememberMe = document.getElementById("login-remember").checked;
+
         if (!email || !pass) {
           UI.toast(I18N.t("auth.validationError"), "error");
           return;
@@ -509,7 +511,7 @@ function initAuth() {
         submitBtn.disabled = true;
         submitBtn.textContent = I18N.t("common.loading");
 
-        const res = await AuthService.login(email, pass);
+        const res = await AuthService.login(email, pass, rememberMe);
 
         if (res.ok) {
           UI.toast(I18N.t("auth.loginSuccess"), "success");
