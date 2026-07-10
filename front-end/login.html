@@ -36,6 +36,15 @@
   <script defer src="js/cart.js"></script>
   <script defer src="js/ui.js"></script>
   <script defer src="js/main.js"></script>
+  <script>
+    function handleGoogleCredentialResponse(response) {
+      const isRegister = document.querySelector('button[data-tab="register"]').getAttribute('aria-selected') === 'true';
+      AuthService.googleLogin(response.credential, isRegister).then(res => {
+        if (res.ok) window.location.href = 'profile.html';
+        else alert(res.message);
+      });
+    }
+  </script>
   <link rel="icon" type="image/png" href="assets/images/ui/logo-placeholder.png">
 </head>
 <body>
@@ -81,6 +90,23 @@
             <label style="display:flex;gap:.4rem;align-items:center"><input type="checkbox" id="login-remember"> <span data-i18n="auth.remember">تذكّرني</span></label>
           </div>
           <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.loginBtn">دخول</button>
+          <div class="separator" style="text-align:center; margin: 1.5rem 0; color: var(--text-muted); font-size: 0.9rem;"><span data-i18n="auth.or">أو</span></div>
+          <div style="display:flex; justify-content:center;">
+            <div id="g_id_onload"
+                 data-client_id="616265757583-ciqasnjads2vbi0mvd49rproekrf821k.apps.googleusercontent.com"
+                 data-context="signin"
+                 data-callback="handleGoogleCredentialResponse">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="outline"
+                 data-text="continue_with"
+                 data-size="large"
+                 data-logo_alignment="center"
+                 data-width="376">
+            </div>
+          </div>
         </form>
 
         <!-- REGISTER -->
@@ -102,11 +128,24 @@
             <input class="input" id="reg-confirm" type="password" required autocomplete="new-password">
           </div>
           <button class="btn btn-primary btn-block" type="submit" data-i18n="auth.registerBtn">تسجيل</button>
+          <div class="separator" style="text-align:center; margin: 1.5rem 0; color: var(--text-muted); font-size: 0.9rem;"><span data-i18n="auth.or">أو</span></div>
+          <div style="display:flex; justify-content:center;">
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="pill"
+                 data-theme="outline"
+                 data-text="continue_with"
+                 data-size="large"
+                 data-logo_alignment="center"
+                 data-width="376">
+            </div>
+          </div>
         </form>
 
 
       </div>
     </div>
   </main>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 </html>

@@ -241,6 +241,41 @@ const AuthService = (() => {
   }
 
   /**
+   * Send a Google login/register request
+   */
+  async function googleLogin(tokenId, isRegister) {
+    try {
+      const response = await fetch(`${API_BASE}/social`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ tokenId, provider: "Google", isRegister }),
+      });
+
+      const data = await response.json();
+      const isSuccess = data.isSuccess ?? data.IsSuccess ?? response.ok;
+
+      if (isSuccess) {
+        const token = data.token || data.accessToken || data.Token || data.AccessToken;
+        const refreshToken = data.refreshToken || data.RefreshToken;
+        saveTokens(token, refreshToken);
+        return {
+          ok: true,
+          token,
+          refreshToken,
+          message: data.message || "Success",
+        };
+      }
+      return { ok: false, message: data.message || (isRegister ? "Registration failed" : "Login failed") };
+    } catch (error) {
+      console.warn("[AuthService] Google API failed:", error);
+      return { ok: false, message: "Network error during Google auth" };
+    }
+  }
+
+  /**
    * Authenticated fetch wrapper. Automatically injects authorization header,
    * detects 401s, handles token refresh, and retries.
    */
@@ -383,6 +418,7 @@ const AuthService = (() => {
     isAdmin,
     shouldRefresh,
     fetchAuthenticated,
+    googleLogin,
   };
 })();
 

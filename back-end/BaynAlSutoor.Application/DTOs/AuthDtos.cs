@@ -37,5 +37,6 @@ namespace BaynAlSutoor.Application.DTOs
     {
         public string TokenId { get; set; } = string.Empty;
         public string Provider { get; set; } = string.Empty; // e.g. "Google", "Facebook"
+        public bool IsRegister { get; set; }
     }
 }

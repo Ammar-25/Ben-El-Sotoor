@@ -2,6 +2,7 @@ using AutoMapper;
 using BaynAlSutoor.Application.DTOs;
 using BaynAlSutoor.Application.Interfaces;
 using BaynAlSutoor.Domain.Entities;
+using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -159,32 +160,89 @@ namespace BaynAlSutoor.Application.Services
 
         public async Task<AuthResponseDto> SocialLoginAsync(SocialLoginRequestDto request)
         {
-            // Social integration mock: We'll create or log in a test user "socialUser@example.com"
-            string email = $"{request.Provider.ToLower()}user@example.com";
-            var user = await _unitOfWork.Users.GetByEmailAsync(email);
-            if (user == null)
+            if (request.Provider == "Google")
             {
-                user = new User
+                try
                 {
-                    Name = $"{request.Provider} User",
-                    Email = email,
-                    PasswordHash = _passwordHasher.HashPassword(Guid.NewGuid().ToString()),
-                    MemberSince = DateTime.UtcNow.Year,
-                    CreatedAt = DateTime.UtcNow
-                };
-                await _unitOfWork.Users.AddAsync(user);
-                await _unitOfWork.CompleteAsync();
+                    var settings = new GoogleJsonWebSignature.ValidationSettings()
+                    {
+                        Audience = new List<string>() { "616265757583-ciqasnjads2vbi0mvd49rproekrf821k.apps.googleusercontent.com" }
+                    };
+                    
+                    var payload = await GoogleJsonWebSignature.ValidateAsync(request.TokenId, settings);
+                    string email = payload.Email;
+                    
+                    var user = await _unitOfWork.Users.GetByEmailAsync(email);
+                    
+                    if (request.IsRegister)
+                    {
+                        if (user != null)
+                        {
+                            return new AuthResponseDto { IsSuccess = false, Message = "Email address already registered." };
+                        }
+                        
+                        user = new User
+                        {
+                            Name = payload.Name ?? "Google User",
+                            Email = email,
+                            PasswordHash = _passwordHasher.HashPassword(Guid.NewGuid().ToString()),
+                            MemberSince = DateTime.UtcNow.Year,
+                            CreatedAt = DateTime.UtcNow
+                        };
+                        await _unitOfWork.Users.AddAsync(user);
+                        await _unitOfWork.CompleteAsync();
 
-                var readerRole = (await _unitOfWork.Roles.FindAsync(r => r.Name == "Reader")).FirstOrDefault();
-                if (readerRole != null)
+                        var readerRole = (await _unitOfWork.Roles.FindAsync(r => r.Name == "Reader")).FirstOrDefault();
+                        if (readerRole != null)
+                        {
+                            var userRole = new UserRole { UserId = user.Id, RoleId = readerRole.Id };
+                            await _unitOfWork.UserRoles.AddAsync(userRole);
+                        }
+                        await _unitOfWork.CompleteAsync();
+                        
+                        // Create Audit Log
+                        var log = new AuditLog
+                        {
+                            UserId = user.Id,
+                            Action = "User Registration (Google)",
+                            EntityName = "User",
+                            EntityId = user.Id.ToString(),
+                            Timestamp = DateTime.UtcNow,
+                            Details = $"User registered via Google with email {user.Email}"
+                        };
+                        await _unitOfWork.AuditLogs.AddAsync(log);
+                        await _unitOfWork.CompleteAsync();
+                    }
+                    else
+                    {
+                        if (user == null)
+                        {
+                            return new AuthResponseDto { IsSuccess = false, Message = "Account not found. Please register first." };
+                        }
+                        
+                        // Create Audit Log
+                        var log = new AuditLog
+                        {
+                            UserId = user.Id,
+                            Action = "User Login (Google)",
+                            EntityName = "User",
+                            EntityId = user.Id.ToString(),
+                            Timestamp = DateTime.UtcNow,
+                            Details = $"User logged in via Google: {user.Email}"
+                        };
+                        await _unitOfWork.AuditLogs.AddAsync(log);
+                        await _unitOfWork.CompleteAsync();
+                    }
+
+                    return await LoginUserAsync(user);
+                }
+                catch (InvalidJwtException)
                 {
-                    // direct entry setup mapping user role
-                    var userRole = new UserRole { UserId = user.Id, RoleId = readerRole.Id };
-                    await _unitOfWork.UserRoles.AddAsync(userRole);
+                    return new AuthResponseDto { IsSuccess = false, Message = "Invalid Google token." };
                 }
             }
 
-            return await LoginUserAsync(user);
+            return new AuthResponseDto { IsSuccess = false, Message = "Unsupported provider." };
         }
 
         private async Task<AuthResponseDto> LoginUserAsync(User user, bool rememberMe = false)
