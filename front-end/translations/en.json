@@ -289,6 +289,7 @@
   },
   "admin": {
     "title": "Admin Dashboard",
+    "searchAuthor": "Search for an author...",
     "overview": "Overview",
     "manageBooks": "Manage Books",
     "manageAuthors": "Manage Authors",

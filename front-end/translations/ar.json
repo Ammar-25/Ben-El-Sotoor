@@ -289,6 +289,7 @@
   },
   "admin": {
     "title": "لوحة تحكم الإدارة",
+    "searchAuthor": "ابحث عن مؤلف...",
     "overview": "نظرة عامة",
     "manageBooks": "إدارة الكتب",
     "manageAuthors": "إدارة المؤلفين",
